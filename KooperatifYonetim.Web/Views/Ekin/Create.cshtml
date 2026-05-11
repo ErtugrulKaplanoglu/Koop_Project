@@ -1,0 +1,62 @@
+@model KooperatifYonetim.Web.Models.EkinFormViewModel
+@{
+    ViewData["Title"] = "Yeni Ekin";
+}
+
+<div class="d-flex align-items-center mb-4">
+    <a asp-action="Index" class="btn btn-sm btn-outline-secondary me-3">
+        <i class="bi bi-arrow-left"></i> Geri
+    </a>
+    <h4 class="fw-bold mb-0">Yeni Ekin Ekle</h4>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <form asp-action="Create" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-3">
+                        <label asp-for="AraziId" class="form-label fw-semibold"></label>
+                        <select asp-for="AraziId" asp-items="Model.AraziListesi" class="form-select">
+                            <option value="">— Arazi Seçin —</option>
+                        </select>
+                        <span asp-validation-for="AraziId" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="EkinTuru" class="form-label fw-semibold"></label>
+                        <input asp-for="EkinTuru" class="form-control" placeholder="Örn: Buğday, Mısır, Domates" />
+                        <span asp-validation-for="EkinTuru" class="text-danger small"></span>
+                    </div>
+
+                    <div class="row g-2 mb-3">
+                        <div class="col-6">
+                            <label asp-for="EkimTarihi" class="form-label fw-semibold"></label>
+                            <input asp-for="EkimTarihi" class="form-control" type="date" />
+                            <span asp-validation-for="EkimTarihi" class="text-danger small"></span>
+                        </div>
+                        <div class="col-6">
+                            <label asp-for="HasatTarihi" class="form-label fw-semibold"></label>
+                            <input asp-for="HasatTarihi" class="form-control" type="date" />
+                            <span asp-validation-for="HasatTarihi" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Durum" class="form-label fw-semibold"></label>
+                        <select asp-for="Durum" asp-items="Html.GetEnumSelectList<KooperatifYonetim.Core.Enums.EkinDurum>()" class="form-select"></select>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <a asp-action="Index" class="btn btn-outline-secondary flex-fill">İptal</a>
+                        <button type="submit" class="btn btn-primary flex-fill">
+                            <i class="bi bi-save me-1"></i> Kaydet
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

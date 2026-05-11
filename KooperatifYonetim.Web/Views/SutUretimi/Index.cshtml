@@ -1,0 +1,57 @@
+@model IEnumerable<KooperatifYonetim.Core.Entities.SutUretimi>
+@{
+    ViewData["Title"] = "Süt Üretimi Kayıtları";
+    var canCreate = User.IsInRole("Yonetici") || User.IsInRole("Uretici");
+    var toplamSut = Model.Sum(s => s.Miktar);
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold mb-0">Süt Üretimi Kayıtları</h4>
+        <p class="text-muted small mb-0">Toplam: <strong>@toplamSut.ToString("N1") L</strong></p>
+    </div>
+    @if (canCreate)
+    {
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-1"></i> Kayıt Ekle
+        </a>
+    }
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-0">
+        @if (!Model.Any())
+        {
+            <div class="text-center py-5 text-muted">
+                <i class="bi bi-droplet fs-1 d-block mb-2"></i>
+                <span>Süt üretimi kaydı bulunmuyor.</span>
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Tarih</th>
+                            <th>Ahır</th>
+                            <th>Mandira</th>
+                            <th>Miktar (L)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var s in Model)
+                        {
+                            <tr>
+                                <td>@s.Tarih.ToString("dd.MM.yyyy")</td>
+                                <td class="fw-semibold">@s.Ahir?.Ad</td>
+                                <td>@s.Mandira?.Ad @s.Mandira?.Soyad</td>
+                                <td>@s.Miktar.ToString("N1")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>

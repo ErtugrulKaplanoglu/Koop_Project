@@ -1,0 +1,250 @@
+@model KooperatifYonetim.Core.Entities.Arazi
+@{
+    ViewData["Title"] = Model.Ad;
+    var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+    var canEdit = User.IsInRole("Yonetici") || Model.UreticiId == userId;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <a asp-action="Index" class="btn btn-sm btn-outline-secondary me-2">
+            <i class="bi bi-arrow-left"></i> Geri
+        </a>
+        <span class="fw-bold fs-5">@Model.Ad</span>
+        @if (Model.AktifMi)
+        {
+            <span class="badge bg-success ms-2">Aktif</span>
+        }
+        else
+        {
+            <span class="badge bg-secondary ms-2">Pasif</span>
+        }
+    </div>
+    @if (canEdit)
+    {
+        <div class="d-flex gap-2">
+            <a asp-action="Edit" asp-route-id="@Model.AraziId" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-pencil me-1"></i> Düzenle
+            </a>
+            <form asp-action="Delete" asp-route-id="@Model.AraziId" method="post"
+                  onsubmit="return confirm('Bu araziyi silmek istediğinizden emin misiniz?')">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-outline-danger btn-sm">
+                    <i class="bi bi-trash me-1"></i> Sil
+                </button>
+            </form>
+        </div>
+    }
+</div>
+
+<div class="row g-3">
+    <!-- Temel Bilgiler -->
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-white border-0 pt-3">
+                <h6 class="fw-bold mb-0"><i class="bi bi-info-circle me-2 text-primary"></i>Arazi Bilgileri</h6>
+            </div>
+            <div class="card-body">
+                <dl class="row mb-0">
+                    <dt class="col-5 text-muted small">Üretici</dt>
+                    <dd class="col-7">@Model.Uretici?.Ad @Model.Uretici?.Soyad</dd>
+
+                    <dt class="col-5 text-muted small">Yüz Ölçümü</dt>
+                    <dd class="col-7">@Model.YuzOlcumu dönüm</dd>
+
+                    <dt class="col-5 text-muted small">Enlem</dt>
+                    <dd class="col-7">@Model.Enlem.ToString("F6")</dd>
+
+                    <dt class="col-5 text-muted small">Boylam</dt>
+                    <dd class="col-7">@Model.Boylam.ToString("F6")</dd>
+
+                    <dt class="col-5 text-muted small">Ekin Sayısı</dt>
+                    <dd class="col-7">@Model.Ekinler.Count</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <!-- Harita -->
+    <div class="col-md-8">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 pt-3">
+                <h6 class="fw-bold mb-0"><i class="bi bi-geo-alt me-2 text-success"></i>Konum</h6>
+            </div>
+            <div class="card-body p-2">
+                <div id="araziHarita" style="height: 280px; border-radius: 8px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hava Durumu -->
+    <div class="col-12">
+        @{
+            var hava = ViewBag.HavaDurumu as KooperatifYonetim.Core.DTOs.WeatherDto;
+        }
+        @if (hava is not null)
+        {
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-0 pt-3">
+                    <h6 class="fw-bold mb-0"><i class="bi bi-cloud-sun me-2 text-warning"></i>Hava Durumu — @hava.SehirAdi</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row align-items-center g-3">
+                        <div class="col-auto">
+                            <img src="@hava.IkonUrl" alt="@hava.Durum" width="64" height="64" />
+                        </div>
+                        <div class="col-auto">
+                            <div class="fw-bold fs-2">@hava.Sicaklik.ToString("F1")°C</div>
+                            <div class="text-muted text-capitalize">@hava.Durum</div>
+                        </div>
+                        <div class="col">
+                            <div class="d-flex gap-4 flex-wrap">
+                                <div>
+                                    <div class="text-muted small">Nem</div>
+                                    <div class="fw-semibold"><i class="bi bi-droplet text-primary me-1"></i>%@hava.Nem</div>
+                                </div>
+                                <div>
+                                    <div class="text-muted small">Rüzgar</div>
+                                    <div class="fw-semibold"><i class="bi bi-wind text-info me-1"></i>@hava.RuzgarHizi.ToString("F1") m/s</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="card border-0 shadow-sm border-start border-warning border-3">
+                <div class="card-body py-2 d-flex align-items-center gap-3">
+                    <i class="bi bi-cloud-sun fs-4 text-warning"></i>
+                    <div>
+                        <div class="fw-semibold small">Hava Durumu</div>
+                        <div class="text-muted small">
+                            Göstermek için <code>appsettings.json</code> dosyasına OpenWeatherMap API anahtarı ekleyin.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Ekinler -->
+<div class="card border-0 shadow-sm mt-3">
+    <div class="card-header bg-white border-0 pt-3 d-flex justify-content-between align-items-center">
+        <h6 class="fw-bold mb-0"><i class="bi bi-flower1 me-2 text-success"></i>Ekinler</h6>
+        @if (canEdit)
+        {
+            <a asp-controller="Ekin" asp-action="Create" asp-route-araziId="@Model.AraziId" class="btn btn-sm btn-outline-success">
+                <i class="bi bi-plus-circle me-1"></i> Ekin Ekle
+            </a>
+        }
+    </div>
+    <div class="card-body p-0">
+        @if (!Model.Ekinler.Any())
+        {
+            <p class="text-muted small px-3 py-3 mb-0">Bu araziye henüz ekin eklenmemiş.</p>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Tür</th>
+                            <th>Ekim Tarihi</th>
+                            <th>Hasat Tarihi</th>
+                            <th>Durum</th>
+                            <th class="text-end">İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var ekin in Model.Ekinler.OrderByDescending(e => e.EkimTarihi))
+                        {
+                            <tr>
+                                <td class="fw-semibold">@ekin.EkinTuru</td>
+                                <td>@ekin.EkimTarihi.ToString("dd.MM.yyyy")</td>
+                                <td>@(ekin.HasatTarihi?.ToString("dd.MM.yyyy") ?? "—")</td>
+                                <td>
+                                    @switch (ekin.Durum)
+                                    {
+                                        case KooperatifYonetim.Core.Enums.EkinDurum.Aktif:
+                                            <span class="badge bg-success">Aktif</span>
+                                            break;
+                                        case KooperatifYonetim.Core.Enums.EkinDurum.HasatAsamasi:
+                                            <span class="badge bg-warning text-dark">Hasat Aşaması</span>
+                                            break;
+                                        case KooperatifYonetim.Core.Enums.EkinDurum.Tamamlandi:
+                                            <span class="badge bg-secondary">Tamamlandı</span>
+                                            break;
+                                    }
+                                </td>
+                                <td class="text-end">
+                                    <a asp-controller="Ekin" asp-action="Details" asp-route-id="@ekin.EkinId" class="btn btn-sm btn-outline-secondary">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Ürün Teminleri -->
+@if (Model.UrunTeminler.Any())
+{
+    <div class="card border-0 shadow-sm mt-3">
+        <div class="card-header bg-white border-0 pt-3">
+            <h6 class="fw-bold mb-0"><i class="bi bi-box-seam me-2 text-primary"></i>Ürün Teminleri</h6>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Toptancı</th>
+                            <th>Dönem</th>
+                            <th>Planlanan</th>
+                            <th>Alınan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var temin in Model.UrunTeminler)
+                        {
+                            <tr>
+                                <td>@temin.Toptanci?.Ad @temin.Toptanci?.Soyad</td>
+                                <td>@temin.Donem</td>
+                                <td>@temin.PlanlananMiktar kg</td>
+                                <td>@(temin.AlinanMiktar.HasValue ? $"{temin.AlinanMiktar} kg" : "—")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        const lat = @Model.Enlem.ToString(System.Globalization.CultureInfo.InvariantCulture);
+        const lng = @Model.Boylam.ToString(System.Globalization.CultureInfo.InvariantCulture);
+        const map = L.map('araziHarita').setView([lat, lng], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+        L.marker([lat, lng])
+            .addTo(map)
+            .bindPopup('<strong>@Html.Raw(Model.Ad)</strong><br/>@Model.YuzOlcumu dönüm')
+            .openPopup();
+    </script>
+}

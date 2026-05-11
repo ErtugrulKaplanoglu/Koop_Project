@@ -1,0 +1,100 @@
+@model IEnumerable<KooperatifYonetim.Core.Entities.TarimIslem>
+@{
+    ViewData["Title"] = "Tarım İşlemleri";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold mb-0">Tarım İşlemleri</h4>
+        <p class="text-muted small mb-0">Toplam @Model.Count() işlem</p>
+    </div>
+    <a asp-action="Create" class="btn btn-primary">
+        <i class="bi bi-plus-circle me-1"></i> Yeni İşlem
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-0">
+        @if (!Model.Any())
+        {
+            <div class="text-center py-5 text-muted">
+                <i class="bi bi-calendar-check fs-1 d-block mb-2"></i>
+                Henüz tarım işlemi eklenmemiş.
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>İşlem Türü</th>
+                            <th>Ekin</th>
+                            <th>Arazi</th>
+                            <th>Planlanan Tarih</th>
+                            <th>Durum</th>
+                            <th class="text-end">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var islem in Model)
+                        {
+                            <tr class="@(islem.Tamamlandi ? "table-light" : "")">
+                                <td>
+                                    @switch (islem.IslemTuru)
+                                    {
+                                        case KooperatifYonetim.Core.Enums.IslemTuru.Sulama:
+                                            <i class="bi bi-droplet text-primary me-1"></i>
+                                            break;
+                                        case KooperatifYonetim.Core.Enums.IslemTuru.Ilacalama:
+                                            <i class="bi bi-bug text-danger me-1"></i>
+                                            break;
+                                        case KooperatifYonetim.Core.Enums.IslemTuru.Toplama:
+                                            <i class="bi bi-basket text-success me-1"></i>
+                                            break;
+                                    }
+                                    @islem.IslemTuru
+                                </td>
+                                <td>@islem.Ekin?.EkinTuru</td>
+                                <td>@islem.Ekin?.Arazi?.Ad</td>
+                                <td>@islem.PlanlananTarih.ToString("dd.MM.yyyy")</td>
+                                <td>
+                                    @if (islem.Tamamlandi)
+                                    {
+                                        <span class="badge bg-success">Tamamlandı</span>
+                                    }
+                                    else if (islem.PlanlananTarih < DateTime.Today)
+                                    {
+                                        <span class="badge bg-danger">Gecikmiş</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning text-dark">Bekliyor</span>
+                                    }
+                                </td>
+                                <td class="text-end">
+                                    @if (!islem.Tamamlandi)
+                                    {
+                                        <a asp-action="Tamamla" asp-route-id="@islem.IslemId" class="btn btn-sm btn-outline-success" title="Tamamla">
+                                            <i class="bi bi-check-circle"></i>
+                                        </a>
+                                    }
+                                    <a asp-action="Edit" asp-route-id="@islem.IslemId" class="btn btn-sm btn-outline-primary ms-1">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <form asp-action="Delete" asp-route-id="@islem.IslemId" method="post" class="d-inline ms-1"
+                                          onsubmit="return confirm('Bu işlemi silmek istediğinizden emin misiniz?')">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>

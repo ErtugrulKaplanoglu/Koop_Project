@@ -1,0 +1,87 @@
+@model IEnumerable<KooperatifYonetim.Core.Entities.Ahir>
+@{
+    ViewData["Title"] = "Ahırlar";
+    var isAdmin = User.IsInRole("Yonetici");
+    var currentUserId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold mb-0">Ahırlar</h4>
+        <p class="text-muted small mb-0">@Model.Count() ahır kayıtlı</p>
+    </div>
+    @if (isAdmin)
+    {
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-1"></i> Yeni Ahır
+        </a>
+    }
+</div>
+
+@if (!Model.Any())
+{
+    <div class="card border-0 shadow-sm">
+        <div class="text-center py-5 text-muted">
+            <i class="bi bi-house fs-1 d-block mb-2"></i>
+            <span>Henüz ahır kaydı bulunmuyor.</span>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row g-3">
+        @foreach (var ahir in Model)
+        {
+            var canEdit = isAdmin || ahir.UreticiId == currentUserId;
+            <div class="col-md-6 col-xl-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h6 class="fw-bold mb-0">@ahir.Ad</h6>
+                            @if (ahir.AktifMi)
+                            {
+                                <span class="badge bg-success">Aktif</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Pasif</span>
+                            }
+                        </div>
+                        @if (isAdmin)
+                        {
+                            <p class="text-muted small mb-1">
+                                <i class="bi bi-person me-1"></i>@ahir.Uretici?.Ad @ahir.Uretici?.Soyad
+                            </p>
+                        }
+                        <p class="text-muted small mb-1">
+                            <i class="bi bi-geo-alt me-1"></i>@(string.IsNullOrEmpty(ahir.Adres) ? "Adres belirtilmemiş" : ahir.Adres)
+                        </p>
+                        <p class="small mb-0">
+                            <i class="bi bi-piggy-bank me-1 text-primary"></i>
+                            <strong>@ahir.HayvanSayisi</strong> hayvan
+                        </p>
+                    </div>
+                    <div class="card-footer bg-white border-0 d-flex gap-2">
+                        <a asp-action="Details" asp-route-id="@ahir.AhirId" class="btn btn-sm btn-outline-primary flex-fill">
+                            <i class="bi bi-eye me-1"></i>Detay
+                        </a>
+                        @if (canEdit)
+                        {
+                            <a asp-action="Edit" asp-route-id="@ahir.AhirId" class="btn btn-sm btn-outline-secondary">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <form asp-action="Delete" method="post" class="d-inline"
+                                  onsubmit="return confirm('Ahırı pasife almak istediğinize emin misiniz?')">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@ahir.AhirId" />
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

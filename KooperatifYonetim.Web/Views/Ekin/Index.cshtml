@@ -1,0 +1,87 @@
+@model IEnumerable<KooperatifYonetim.Core.Entities.Ekin>
+@{
+    ViewData["Title"] = "Ekinlerim";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold mb-0">Ekinler</h4>
+        <p class="text-muted small mb-0">Toplam @Model.Count() ekin</p>
+    </div>
+    <a asp-action="Create" class="btn btn-primary">
+        <i class="bi bi-plus-circle me-1"></i> Yeni Ekin
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-0">
+        @if (!Model.Any())
+        {
+            <div class="text-center py-5 text-muted">
+                <i class="bi bi-flower1 fs-1 d-block mb-2"></i>
+                Henüz ekin eklenmemiş.
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Ekin Türü</th>
+                            <th>Arazi</th>
+                            <th>Ekim Tarihi</th>
+                            <th>Hasat Tarihi</th>
+                            <th>Durum</th>
+                            <th class="text-end">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var ekin in Model)
+                        {
+                            <tr>
+                                <td class="fw-semibold">@ekin.EkinTuru</td>
+                                <td>
+                                    <a asp-controller="Arazi" asp-action="Details" asp-route-id="@ekin.AraziId" class="text-decoration-none">
+                                        @ekin.Arazi?.Ad
+                                    </a>
+                                </td>
+                                <td>@ekin.EkimTarihi.ToString("dd.MM.yyyy")</td>
+                                <td>@(ekin.HasatTarihi?.ToString("dd.MM.yyyy") ?? "—")</td>
+                                <td>
+                                    @switch (ekin.Durum)
+                                    {
+                                        case KooperatifYonetim.Core.Enums.EkinDurum.Aktif:
+                                            <span class="badge bg-success">Aktif</span>
+                                            break;
+                                        case KooperatifYonetim.Core.Enums.EkinDurum.HasatAsamasi:
+                                            <span class="badge bg-warning text-dark">Hasat Aşaması</span>
+                                            break;
+                                        case KooperatifYonetim.Core.Enums.EkinDurum.Tamamlandi:
+                                            <span class="badge bg-secondary">Tamamlandı</span>
+                                            break;
+                                    }
+                                </td>
+                                <td class="text-end">
+                                    <a asp-action="Details" asp-route-id="@ekin.EkinId" class="btn btn-sm btn-outline-secondary">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a asp-action="Edit" asp-route-id="@ekin.EkinId" class="btn btn-sm btn-outline-primary ms-1">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <form asp-action="Delete" asp-route-id="@ekin.EkinId" method="post" class="d-inline ms-1"
+                                          onsubmit="return confirm('@ekin.EkinTuru ekinini silmek istediğinizden emin misiniz?')">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>

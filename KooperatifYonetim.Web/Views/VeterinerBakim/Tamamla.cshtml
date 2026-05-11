@@ -1,0 +1,67 @@
+@model KooperatifYonetim.Web.Models.VeterinerBakimTamamlaViewModel
+@{
+    ViewData["Title"] = "Bakımı Tamamla";
+}
+
+<div class="d-flex align-items-center mb-4">
+    <a asp-action="Index" class="btn btn-sm btn-outline-secondary me-3">
+        <i class="bi bi-arrow-left"></i> Geri
+    </a>
+    <h4 class="fw-bold mb-0">Bakımı Tamamla</h4>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+
+                <div class="p-3 bg-light rounded-3 mb-4">
+                    <div class="row g-2">
+                        <div class="col-4 text-muted small fw-semibold">Ahır</div>
+                        <div class="col-8">@Model.AhirAdi</div>
+                        <div class="col-4 text-muted small fw-semibold">Bakım Türü</div>
+                        <div class="col-8">
+                            @if (Model.BakimTuru == KooperatifYonetim.Core.Enums.BakimTuru.Acil)
+                            {
+                                <span class="badge bg-danger">Acil</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-info text-dark">Periyodik</span>
+                            }
+                        </div>
+                        <div class="col-4 text-muted small fw-semibold">Planlanan</div>
+                        <div class="col-8">@Model.PlanlananTarih.ToString("dd.MM.yyyy")</div>
+                    </div>
+                </div>
+
+                <form asp-action="Tamamla" method="post">
+                    @Html.AntiForgeryToken()
+                    <input asp-for="BakimId" type="hidden" />
+                    <input asp-for="AhirAdi" type="hidden" />
+                    <input asp-for="BakimTuru" type="hidden" />
+                    <input asp-for="PlanlananTarih" type="hidden" />
+
+                    <div class="mb-3">
+                        <label asp-for="GerceklesenTarih" class="form-label fw-semibold"></label>
+                        <input asp-for="GerceklesenTarih" type="date" class="form-control"
+                               value="@Model.GerceklesenTarih.ToString("yyyy-MM-dd")" />
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Notlar" class="form-label fw-semibold"></label>
+                        <textarea asp-for="Notlar" class="form-control" rows="3"
+                                  placeholder="Yapılan işlem, bulgular vb."></textarea>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <a asp-action="Index" class="btn btn-outline-secondary flex-fill">İptal</a>
+                        <button type="submit" class="btn btn-success flex-fill">
+                            <i class="bi bi-check2-circle me-1"></i> Tamamlandı İşaretle
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Data\bin\Debug\net9.0\KooperatifYonetim.Data.deps.json
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Data\bin\Debug\net9.0\KooperatifYonetim.Data.runtimeconfig.json
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Data\bin\Debug\net9.0\KooperatifYonetim.Data.dll
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Data\bin\Debug\net9.0\KooperatifYonetim.Data.pdb
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Data\bin\Debug\net9.0\KooperatifYonetim.Core.dll
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Data\bin\Debug\net9.0\KooperatifYonetim.Core.pdb
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Data\obj\Debug\net9.0\KooperatifYonetim.Data.csproj.AssemblyReference.cache
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Data\obj\Debug\net9.0\KooperatifYonetim.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Data\obj\Debug\net9.0\KooperatifYonetim.Data.AssemblyInfoInputs.cache
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Data\obj\Debug\net9.0\KooperatifYonetim.Data.AssemblyInfo.cs
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Data\obj\Debug\net9.0\KooperatifYonetim.Data.csproj.CoreCompileInputs.cache
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Data\obj\Debug\net9.0\Kooperat.5430C69E.Up2Date
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Data\obj\Debug\net9.0\KooperatifYonetim.Data.dll
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Data\obj\Debug\net9.0\refint\KooperatifYonetim.Data.dll
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Data\obj\Debug\net9.0\KooperatifYonetim.Data.pdb
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Data\obj\Debug\net9.0\KooperatifYonetim.Data.genruntimeconfig.cache
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Data\obj\Debug\net9.0\ref\KooperatifYonetim.Data.dll

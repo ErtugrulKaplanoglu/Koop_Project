@@ -1,0 +1,156 @@
+:root {
+    --color-primary:       #2E7D32;
+    --color-primary-light: #66BB6A;
+    --color-bg:            #F5F5F5;
+    --color-card:          #FFFFFF;
+    --color-text:          #212121;
+    --color-text-muted:    #757575;
+    --color-danger:        #C62828;
+    --color-warning:       #F57F17;
+    --sidebar-width:       240px;
+}
+
+html, body {
+    font-size: 14px;
+    background: var(--color-bg);
+    color: var(--color-text);
+    margin: 0;
+    padding: 0;
+}
+
+@media (min-width: 768px) {
+    html { font-size: 15px; }
+}
+
+/* NAVBAR */
+.koop-navbar {
+    background-color: var(--color-primary) !important;
+    height: 56px;
+}
+
+.koop-navbar .navbar-brand {
+    font-size: 1.1rem;
+    letter-spacing: 0.3px;
+}
+
+/* SIDEBAR */
+.koop-sidebar {
+    width: var(--sidebar-width);
+    min-width: var(--sidebar-width);
+    background: #FFFFFF;
+    border-right: 1px solid #E0E0E0;
+    min-height: calc(100vh - 56px);
+    position: sticky;
+    top: 56px;
+    height: calc(100vh - 56px);
+    overflow-y: auto;
+    transition: transform 0.25s ease;
+}
+
+.koop-sidebar .sidebar-link {
+    color: var(--color-text);
+    border-radius: 6px;
+    font-size: 0.875rem;
+    padding: 0.45rem 0.75rem;
+    transition: background 0.15s, color 0.15s;
+}
+
+.koop-sidebar .sidebar-link:hover {
+    background: #E8F5E9;
+    color: var(--color-primary);
+}
+
+.koop-sidebar .sidebar-link.active {
+    background: var(--color-primary);
+    color: #FFFFFF;
+    font-weight: 600;
+}
+
+.sidebar-section-label {
+    list-style: none;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+    padding: 0.6rem 0.75rem 0.2rem;
+    margin-top: 0.25rem;
+}
+
+/* MAIN CONTENT */
+.koop-main {
+    background: var(--color-bg);
+    min-height: calc(100vh - 56px);
+}
+
+.koop-main.with-sidebar {
+    max-width: calc(100vw - var(--sidebar-width));
+}
+
+/* CARDS */
+.koop-stat-card {
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.koop-stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1) !important;
+}
+
+.stat-icon {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* TABLES */
+.table thead th {
+    background: #F5F5F5;
+    font-weight: 600;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 2px solid #E0E0E0;
+}
+
+/* BUTTONS */
+.btn-primary {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+.btn-primary:hover, .btn-primary:focus {
+    background-color: #1B5E20;
+    border-color: #1B5E20;
+}
+.btn-outline-primary {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+.btn-outline-primary:hover {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+/* FOCUS */
+.btn:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.2rem rgba(46,125,50,0.25);
+}
+
+/* MOBILE */
+@media (max-width: 991.98px) {
+    .koop-sidebar {
+        position: fixed;
+        top: 56px;
+        left: 0;
+        z-index: 1040;
+        transform: translateX(-100%);
+        box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+    }
+    .koop-sidebar.show {
+        transform: translateX(0);
+    }
+    .koop-main.with-sidebar {
+        max-width: 100vw;
+    }
+}

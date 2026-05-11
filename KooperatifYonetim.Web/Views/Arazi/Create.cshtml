@@ -1,0 +1,150 @@
+@model KooperatifYonetim.Web.Models.AraziFormViewModel
+@{
+    ViewData["Title"] = "Yeni Arazi";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+}
+
+<div class="d-flex align-items-center mb-4">
+    <a asp-action="Index" class="btn btn-sm btn-outline-secondary me-3">
+        <i class="bi bi-arrow-left"></i> Geri
+    </a>
+    <h4 class="fw-bold mb-0">Yeni Arazi Ekle</h4>
+</div>
+
+<div class="row g-3">
+    <div class="col-lg-5">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <form asp-action="Create" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-3">
+                        <label asp-for="UreticiId" class="form-label fw-semibold"></label>
+                        <select asp-for="UreticiId" asp-items="Model.UreticiListesi" class="form-select">
+                            <option value="">-- Üretici Seçiniz --</option>
+                        </select>
+                        <span asp-validation-for="UreticiId" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Ad" class="form-label fw-semibold"></label>
+                        <input asp-for="Ad" class="form-control" placeholder="Örn: Kuzey Tarla" />
+                        <span asp-validation-for="Ad" class="text-danger small"></span>
+                    </div>
+
+                    <div class="row g-2 mb-1">
+                        <div class="col-6">
+                            <label asp-for="Enlem" class="form-label fw-semibold"></label>
+                            <input asp-for="Enlem" id="inputEnlem" class="form-control"
+                                   placeholder="39.9104 veya 39°54'37.5&quot;N"
+                                   autocomplete="off" />
+                            <span asp-validation-for="Enlem" class="text-danger small"></span>
+                        </div>
+                        <div class="col-6">
+                            <label asp-for="Boylam" class="form-label fw-semibold"></label>
+                            <input asp-for="Boylam" id="inputBoylam" class="form-control"
+                                   placeholder="41.2248 veya 41°13'29.3&quot;E"
+                                   autocomplete="off" />
+                            <span asp-validation-for="Boylam" class="text-danger small"></span>
+                        </div>
+                    </div>
+                    <p class="text-muted small mb-3"><i class="bi bi-info-circle me-1"></i>Ondalık (39.9104) veya DMS (39°54'37.5"N) formatında girebilir ya da haritaya tıklayabilirsiniz.</p>
+
+                    <div class="mb-3">
+                        <label asp-for="YuzOlcumu" class="form-label fw-semibold"></label>
+                        <div class="input-group">
+                            <input asp-for="YuzOlcumu" class="form-control" placeholder="0.00" />
+                            <span class="input-group-text">dönüm</span>
+                        </div>
+                        <span asp-validation-for="YuzOlcumu" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4 form-check">
+                        <input asp-for="AktifMi" class="form-check-input" />
+                        <label asp-for="AktifMi" class="form-check-label">Aktif</label>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <a asp-action="Index" class="btn btn-outline-secondary flex-fill">İptal</a>
+                        <button type="submit" class="btn btn-primary flex-fill">
+                            <i class="bi bi-save me-1"></i> Kaydet
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-7">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 pt-3">
+                <h6 class="fw-bold mb-0"><i class="bi bi-geo-alt me-2 text-success"></i>Haritadan Konum Seç</h6>
+            </div>
+            <div class="card-body p-2">
+                <div id="secimHarita" style="height: 380px; border-radius: 8px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        function dmsToDec(str) {
+            str = (str || '').trim();
+            if (!str) return null;
+            if (/^-?\d+(\.\d+)?$/.test(str)) return parseFloat(str);
+            const m = str.match(/(\d+)[°\s]+(\d+)['\s]+([0-9.]+)["″\s]*([NSEWnsew]?)/);
+            if (!m) return null;
+            let dec = parseFloat(m[1]) + parseFloat(m[2]) / 60 + parseFloat(m[3]) / 3600;
+            const dir = m[4].toUpperCase();
+            if (dir === 'S' || dir === 'W') dec = -dec;
+            return parseFloat(dec.toFixed(6));
+        }
+
+        function tryConvert(inputEl) {
+            const dec = dmsToDec(inputEl.value);
+            if (dec !== null) {
+                inputEl.value = dec;
+                inputEl.classList.remove('is-invalid');
+            }
+        }
+
+        const enlemEl = document.getElementById('inputEnlem');
+        const boylamEl = document.getElementById('inputBoylam');
+
+        enlemEl.addEventListener('blur', () => tryConvert(enlemEl));
+        boylamEl.addEventListener('blur', () => tryConvert(boylamEl));
+
+        const map = L.map('secimHarita').setView([39.0, 35.0], 6);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        let marker = null;
+
+        map.on('click', function (e) {
+            const lat = e.latlng.lat.toFixed(6);
+            const lng = e.latlng.lng.toFixed(6);
+            enlemEl.value = lat;
+            boylamEl.value = lng;
+            if (marker) map.removeLayer(marker);
+            marker = L.marker([lat, lng]).addTo(map).bindPopup('Seçilen konum').openPopup();
+        });
+
+        enlemEl.closest('form').addEventListener('submit', function () {
+            tryConvert(enlemEl);
+            tryConvert(boylamEl);
+        });
+
+        const initLat = parseFloat(enlemEl.value);
+        const initLng = parseFloat(boylamEl.value);
+        if (!isNaN(initLat) && !isNaN(initLng) && (initLat !== 0 || initLng !== 0)) {
+            map.setView([initLat, initLng], 13);
+            marker = L.marker([initLat, initLng]).addTo(map).bindPopup('Seçilen konum').openPopup();
+        }
+    </script>
+}

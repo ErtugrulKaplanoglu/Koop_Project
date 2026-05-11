@@ -1,0 +1,91 @@
+@model IEnumerable<KooperatifYonetim.Core.Entities.BesiStok>
+@{
+    ViewData["Title"] = "Besi Stok Durumu";
+    var canManage = User.IsInRole("Yonetici") || User.IsInRole("Uretici");
+    var kritikSayisi = Model.Count(s => s.MevcutMiktar < s.EsikMiktar);
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold mb-0">Besi Stok Durumu</h4>
+        <p class="text-muted small mb-0">
+            @Model.Count() stok kaydı
+            @if (kritikSayisi > 0)
+            {
+                <span class="badge bg-danger ms-1">@kritikSayisi kritik</span>
+            }
+        </p>
+    </div>
+    @if (canManage)
+    {
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-1"></i> Stok Ekle
+        </a>
+    }
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-0">
+        @if (!Model.Any())
+        {
+            <div class="text-center py-5 text-muted">
+                <i class="bi bi-archive fs-1 d-block mb-2"></i>
+                <span>Besi stoku kaydı bulunmuyor.</span>
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Ahır</th>
+                            <th>Besi Türü</th>
+                            <th>Mevcut (kg)</th>
+                            <th>Eşik (kg)</th>
+                            <th>Stok Durumu</th>
+                            <th>Son Güncelleme</th>
+                            @if (canManage)
+                            {
+                                <th class="text-end">İşlem</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var s in Model)
+                        {
+                            var kritik = s.MevcutMiktar < s.EsikMiktar;
+                            var oran = s.EsikMiktar > 0 ? (int)Math.Min(100, s.MevcutMiktar / s.EsikMiktar * 100) : 100;
+                            <tr>
+                                <td class="fw-semibold">@s.Ahir?.Ad</td>
+                                <td>@s.BesiTuru</td>
+                                <td class="@(kritik ? "text-danger fw-bold" : "")">@s.MevcutMiktar.ToString("N1")</td>
+                                <td class="text-muted">@s.EsikMiktar.ToString("N1")</td>
+                                <td style="min-width:120px">
+                                    <div class="progress" style="height:8px">
+                                        <div class="progress-bar @(kritik ? "bg-danger" : "bg-success")"
+                                             style="width:@oran%"></div>
+                                    </div>
+                                    @if (kritik)
+                                    {
+                                        <small class="text-danger">Kritik seviye!</small>
+                                    }
+                                </td>
+                                <td class="text-muted small">@s.SonGuncelleme.ToString("dd.MM.yyyy")</td>
+                                @if (canManage)
+                                {
+                                    <td class="text-end">
+                                        <a asp-action="Edit" asp-route-id="@s.StokId"
+                                           class="btn btn-sm btn-outline-secondary">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>

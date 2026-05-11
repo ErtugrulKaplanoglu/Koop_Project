@@ -1,0 +1,59 @@
+@model KooperatifYonetim.Web.Models.TarimHastalikFormViewModel
+@{
+    ViewData["Title"] = "Hastalık Bildirimi";
+}
+
+<div class="d-flex align-items-center mb-4">
+    <a asp-action="Index" class="btn btn-sm btn-outline-secondary me-3">
+        <i class="bi bi-arrow-left"></i> Geri
+    </a>
+    <h4 class="fw-bold mb-0">Yeni Hastalık Bildirimi</h4>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 pt-3">
+                <p class="text-muted small mb-0">
+                    <i class="bi bi-info-circle me-1"></i>
+                    Bildirimi gönderdikten sonra atanan ziraat mühendisi inceleyecektir.
+                </p>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-3">
+                        <label asp-for="EkinId" class="form-label fw-semibold"></label>
+                        <select asp-for="EkinId" asp-items="Model.EkinListesi" class="form-select">
+                            <option value="">— Ekin Seçin —</option>
+                        </select>
+                        <span asp-validation-for="EkinId" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="MuhendisId" class="form-label fw-semibold"></label>
+                        <select asp-for="MuhendisId" asp-items="Model.MuhendisListesi" class="form-select">
+                            <option value="">— Mühendis Seçin (Opsiyonel) —</option>
+                        </select>
+                        <div class="form-text">Seçmezseniz sistem otomatik atama yapar.</div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Aciklama" class="form-label fw-semibold"></label>
+                        <textarea asp-for="Aciklama" class="form-control" rows="4"
+                                  placeholder="Belirti, etkilenen alan, ne zamandan beri görüldüğü gibi detayları yazınız..."></textarea>
+                        <span asp-validation-for="Aciklama" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <a asp-action="Index" class="btn btn-outline-secondary flex-fill">İptal</a>
+                        <button type="submit" class="btn btn-danger flex-fill">
+                            <i class="bi bi-send me-1"></i> Bildirimi Gönder
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

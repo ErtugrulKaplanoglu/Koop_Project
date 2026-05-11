@@ -1,0 +1,68 @@
+@model KooperatifYonetim.Web.Models.DurumGuncelleViewModel
+@{
+    ViewData["Title"] = "Bildirim Durumunu Güncelle";
+}
+
+<div class="d-flex align-items-center mb-4">
+    <a asp-action="Index" class="btn btn-sm btn-outline-secondary me-3">
+        <i class="bi bi-arrow-left"></i> Geri
+    </a>
+    <h4 class="fw-bold mb-0">Bildirim Durumunu Güncelle</h4>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+
+                <!-- Bildirim Özeti -->
+                <div class="p-3 bg-light rounded-3 mb-4">
+                    <div class="row g-2">
+                        <div class="col-4 text-muted small fw-semibold">Ekin</div>
+                        <div class="col-8">@Model.EkinTuru</div>
+                        <div class="col-4 text-muted small fw-semibold">Arazi</div>
+                        <div class="col-8">@Model.AraziAdi</div>
+                        <div class="col-4 text-muted small fw-semibold">Mevcut Durum</div>
+                        <div class="col-8">
+                            @switch (Model.MevcutDurum)
+                            {
+                                case KooperatifYonetim.Core.Enums.BildirimDurum.Beklemede:
+                                    <span class="badge bg-warning text-dark">Beklemede</span>
+                                    break;
+                                case KooperatifYonetim.Core.Enums.BildirimDurum.Inceleniyor:
+                                    <span class="badge bg-primary">İnceleniyor</span>
+                                    break;
+                                case KooperatifYonetim.Core.Enums.BildirimDurum.Cozuldu:
+                                    <span class="badge bg-success">Çözüldü</span>
+                                    break;
+                            }
+                        </div>
+                        <div class="col-4 text-muted small fw-semibold">Açıklama</div>
+                        <div class="col-8 small">@Model.Aciklama</div>
+                    </div>
+                </div>
+
+                <form asp-action="DurumGuncelle" method="post">
+                    @Html.AntiForgeryToken()
+                    <input asp-for="BildirimId" type="hidden" />
+                    <input asp-for="EkinTuru" type="hidden" />
+                    <input asp-for="AraziAdi" type="hidden" />
+                    <input asp-for="Aciklama" type="hidden" />
+                    <input asp-for="MevcutDurum" type="hidden" />
+
+                    <div class="mb-4">
+                        <label asp-for="YeniDurum" class="form-label fw-semibold"></label>
+                        <select asp-for="YeniDurum" asp-items="Html.GetEnumSelectList<KooperatifYonetim.Core.Enums.BildirimDurum>()" class="form-select form-select-lg"></select>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <a asp-action="Index" class="btn btn-outline-secondary flex-fill">İptal</a>
+                        <button type="submit" class="btn btn-primary flex-fill">
+                            <i class="bi bi-check-circle me-1"></i> Durumu Güncelle
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

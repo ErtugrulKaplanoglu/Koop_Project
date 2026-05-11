@@ -1,0 +1,12 @@
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Core\bin\Debug\net9.0\KooperatifYonetim.Core.deps.json
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Core\bin\Debug\net9.0\KooperatifYonetim.Core.dll
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Core\bin\Debug\net9.0\KooperatifYonetim.Core.pdb
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Core\obj\Debug\net9.0\KooperatifYonetim.Core.csproj.AssemblyReference.cache
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Core\obj\Debug\net9.0\KooperatifYonetim.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Core\obj\Debug\net9.0\KooperatifYonetim.Core.AssemblyInfoInputs.cache
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Core\obj\Debug\net9.0\KooperatifYonetim.Core.AssemblyInfo.cs
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Core\obj\Debug\net9.0\KooperatifYonetim.Core.csproj.CoreCompileInputs.cache
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Core\obj\Debug\net9.0\KooperatifYonetim.Core.dll
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Core\obj\Debug\net9.0\refint\KooperatifYonetim.Core.dll
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Core\obj\Debug\net9.0\KooperatifYonetim.Core.pdb
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Core\obj\Debug\net9.0\ref\KooperatifYonetim.Core.dll

@@ -1,0 +1,63 @@
+@model KooperatifYonetim.Web.Models.UrunTeminFormViewModel
+@{
+    ViewData["Title"] = "Temin Kaydını Düzenle";
+}
+
+<div class="d-flex align-items-center mb-4">
+    <a asp-action="Index" class="btn btn-sm btn-outline-secondary me-3">
+        <i class="bi bi-arrow-left"></i> Geri
+    </a>
+    <h4 class="fw-bold mb-0">Temin Kaydını Düzenle</h4>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <form asp-action="Edit" method="post">
+                    @Html.AntiForgeryToken()
+                    <input asp-for="UrunTeminId" type="hidden" />
+
+                    <div class="mb-3">
+                        <label asp-for="AraziId" class="form-label fw-semibold"></label>
+                        <select asp-for="AraziId" asp-items="Model.AraziListesi" class="form-select">
+                            <option value="">— Arazi Seçin —</option>
+                        </select>
+                        <span asp-validation-for="AraziId" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Donem" class="form-label fw-semibold"></label>
+                        <input asp-for="Donem" class="form-control" />
+                        <span asp-validation-for="Donem" class="text-danger small"></span>
+                    </div>
+
+                    <div class="row g-2 mb-4">
+                        <div class="col-6">
+                            <label asp-for="PlanlananMiktar" class="form-label fw-semibold"></label>
+                            <div class="input-group">
+                                <input asp-for="PlanlananMiktar" class="form-control" />
+                                <span class="input-group-text">kg</span>
+                            </div>
+                            <span asp-validation-for="PlanlananMiktar" class="text-danger small"></span>
+                        </div>
+                        <div class="col-6">
+                            <label asp-for="AlinanMiktar" class="form-label fw-semibold"></label>
+                            <div class="input-group">
+                                <input asp-for="AlinanMiktar" class="form-control" />
+                                <span class="input-group-text">kg</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <a asp-action="Index" class="btn btn-outline-secondary flex-fill">İptal</a>
+                        <button type="submit" class="btn btn-primary flex-fill">
+                            <i class="bi bi-save me-1"></i> Güncelle
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,110 @@
+@model IEnumerable<KooperatifYonetim.Core.Entities.VeterinerBakim>
+@{
+    ViewData["Title"] = "Veteriner Bakım Takvimi";
+    var isVeteriner = User.IsInRole("Veteriner") || User.IsInRole("Yonetici");
+    var canCreate = User.IsInRole("Yonetici") || User.IsInRole("Uretici");
+    var bekleyenSayisi = Model.Count(b => !b.Tamamlandi);
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold mb-0">Veteriner Bakım Takvimi</h4>
+        <p class="text-muted small mb-0">
+            @Model.Count() bakım planı
+            @if (bekleyenSayisi > 0)
+            {
+                <span class="badge bg-warning text-dark ms-1">@bekleyenSayisi bekliyor</span>
+            }
+        </p>
+    </div>
+    @if (canCreate)
+    {
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-1"></i> Bakım Planla
+        </a>
+    }
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-0">
+        @if (!Model.Any())
+        {
+            <div class="text-center py-5 text-muted">
+                <i class="bi bi-calendar2-heart fs-1 d-block mb-2"></i>
+                <span>Veteriner bakım planı bulunmuyor.</span>
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Ahır</th>
+                            @if (isVeteriner)
+                            {
+                                <th>Üretici</th>
+                            }
+                            <th>Veteriner</th>
+                            <th>Bakım Türü</th>
+                            <th>Planlanan</th>
+                            <th>Gerçekleşen</th>
+                            <th>Durum</th>
+                            <th class="text-end">İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var b in Model)
+                        {
+                            <tr>
+                                <td class="fw-semibold">@b.Ahir?.Ad</td>
+                                @if (isVeteriner)
+                                {
+                                    <td>@b.Ahir?.Uretici?.Ad @b.Ahir?.Uretici?.Soyad</td>
+                                }
+                                <td>@b.Veteriner?.Ad @b.Veteriner?.Soyad</td>
+                                <td>
+                                    @if (b.BakimTuru == KooperatifYonetim.Core.Enums.BakimTuru.Acil)
+                                    {
+                                        <span class="badge bg-danger">Acil</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-info text-dark">Periyodik</span>
+                                    }
+                                </td>
+                                <td>@b.PlanlananTarih.ToString("dd.MM.yyyy")</td>
+                                <td class="text-muted small">
+                                    @(b.GerceklesenTarih.HasValue ? b.GerceklesenTarih.Value.ToString("dd.MM.yyyy") : "—")
+                                </td>
+                                <td>
+                                    @if (b.Tamamlandi)
+                                    {
+                                        <span class="badge bg-success">Tamamlandı</span>
+                                    }
+                                    else if (b.PlanlananTarih < DateTime.Today)
+                                    {
+                                        <span class="badge bg-danger">Gecikmiş</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning text-dark">Bekliyor</span>
+                                    }
+                                </td>
+                                <td class="text-end">
+                                    @if (!b.Tamamlandi && (User.IsInRole("Veteriner") || User.IsInRole("Yonetici")))
+                                    {
+                                        <a asp-action="Tamamla" asp-route-id="@b.BakimId"
+                                           class="btn btn-sm btn-outline-success">
+                                            <i class="bi bi-check2-circle me-1"></i>Tamamla
+                                        </a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>

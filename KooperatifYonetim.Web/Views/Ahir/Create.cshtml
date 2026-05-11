@@ -1,0 +1,55 @@
+@model KooperatifYonetim.Web.Models.AhirFormViewModel
+@{
+    ViewData["Title"] = "Yeni Ahır";
+}
+
+<div class="d-flex align-items-center mb-4">
+    <a asp-action="Index" class="btn btn-sm btn-outline-secondary me-3">
+        <i class="bi bi-arrow-left"></i> Geri
+    </a>
+    <h4 class="fw-bold mb-0">Yeni Ahır Ekle</h4>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <form asp-action="Create" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-3">
+                        <label asp-for="UreticiId" class="form-label fw-semibold"></label>
+                        <select asp-for="UreticiId" asp-items="Model.UreticiListesi" class="form-select">
+                            <option value="">-- Üretici Seçiniz --</option>
+                        </select>
+                        <span asp-validation-for="UreticiId" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Ad" class="form-label fw-semibold"></label>
+                        <input asp-for="Ad" class="form-control" placeholder="Örn: Doğu Ahırı" />
+                        <span asp-validation-for="Ad" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Adres" class="form-label fw-semibold"></label>
+                        <input asp-for="Adres" class="form-control" placeholder="Köy/mahalle, cadde vb." />
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="HayvanSayisi" class="form-label fw-semibold"></label>
+                        <input asp-for="HayvanSayisi" type="number" class="form-control" min="0" />
+                        <span asp-validation-for="HayvanSayisi" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <a asp-action="Index" class="btn btn-outline-secondary flex-fill">İptal</a>
+                        <button type="submit" class="btn btn-primary flex-fill">
+                            <i class="bi bi-check-circle me-1"></i> Ahırı Kaydet
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

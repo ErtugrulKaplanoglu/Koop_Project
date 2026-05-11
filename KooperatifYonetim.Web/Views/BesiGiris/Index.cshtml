@@ -1,0 +1,52 @@
+@model IEnumerable<KooperatifYonetim.Core.Entities.GunlukBesiGirisi>
+@{
+    ViewData["Title"] = "Günlük Besi Girişleri";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold mb-0">Günlük Besi Girişleri</h4>
+        <p class="text-muted small mb-0">Son 100 kayıt</p>
+    </div>
+    <a asp-action="Create" class="btn btn-primary">
+        <i class="bi bi-plus-circle me-1"></i> Besi Girişi Ekle
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-0">
+        @if (!Model.Any())
+        {
+            <div class="text-center py-5 text-muted">
+                <i class="bi bi-basket fs-1 d-block mb-2"></i>
+                <span>Henüz besi girişi kaydı yok.</span>
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Tarih</th>
+                            <th>Ahır</th>
+                            <th>Besi Türü</th>
+                            <th>Miktar (kg)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var g in Model)
+                        {
+                            <tr>
+                                <td>@g.Tarih.ToString("dd.MM.yyyy")</td>
+                                <td class="fw-semibold">@g.Ahir?.Ad</td>
+                                <td>@g.BesiTuru</td>
+                                <td>@g.YedirildenMiktar.ToString("N1")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>

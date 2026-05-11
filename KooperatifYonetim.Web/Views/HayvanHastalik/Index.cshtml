@@ -1,0 +1,117 @@
+@model IEnumerable<KooperatifYonetim.Core.Entities.HayvanHastalikBildirimi>
+@{
+    ViewData["Title"] = "Hayvan Hastalık Bildirimleri";
+    var isVeteriner = User.IsInRole("Veteriner") || User.IsInRole("Yonetici");
+    var canCreate = User.IsInRole("Yonetici") || User.IsInRole("Uretici");
+    var bekleyenSayisi = Model.Count(b => b.Durum == KooperatifYonetim.Core.Enums.BildirimDurum.Beklemede);
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold mb-0">Hayvan Hastalık Bildirimleri</h4>
+        <p class="text-muted small mb-0">
+            @Model.Count() bildirim
+            @if (bekleyenSayisi > 0)
+            {
+                <span class="badge bg-danger ms-1">@bekleyenSayisi bekliyor</span>
+            }
+        </p>
+    </div>
+    @if (canCreate)
+    {
+        <a asp-action="Create" class="btn btn-danger">
+            <i class="bi bi-plus-circle me-1"></i> Bildirim Oluştur
+        </a>
+    }
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-0">
+        @if (!Model.Any())
+        {
+            <div class="text-center py-5 text-muted">
+                <i class="bi bi-heart-pulse fs-1 d-block mb-2"></i>
+                @if (isVeteriner)
+                {
+                    <span>Size atanmış hastalık bildirimi bulunmuyor.</span>
+                }
+                else
+                {
+                    <span>Henüz hastalık bildirimi oluşturulmamış.</span>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Ahır</th>
+                            <th>Tarih</th>
+                            <th>Açıklama</th>
+                            @if (isVeteriner)
+                            {
+                                <th>Üretici</th>
+                            }
+                            <th>Veteriner</th>
+                            <th>Durum</th>
+                            <th class="text-end">İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var b in Model)
+                        {
+                            <tr>
+                                <td class="fw-semibold">@b.Ahir?.Ad</td>
+                                <td>@b.BildirimTarihi.ToString("dd.MM.yyyy")</td>
+                                <td>
+                                    <span title="@b.Aciklama">
+                                        @(b.Aciklama.Length > 60 ? b.Aciklama[..60] + "…" : b.Aciklama)
+                                    </span>
+                                </td>
+                                @if (isVeteriner)
+                                {
+                                    <td>@b.Uretici?.Ad @b.Uretici?.Soyad</td>
+                                }
+                                <td>
+                                    @if (b.Veteriner is not null)
+                                    {
+                                        <span>@b.Veteriner.Ad @b.Veteriner.Soyad</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted small">Atanmadı</span>
+                                    }
+                                </td>
+                                <td>
+                                    @switch (b.Durum)
+                                    {
+                                        case KooperatifYonetim.Core.Enums.BildirimDurum.Beklemede:
+                                            <span class="badge bg-warning text-dark">Beklemede</span>
+                                            break;
+                                        case KooperatifYonetim.Core.Enums.BildirimDurum.Inceleniyor:
+                                            <span class="badge bg-primary">İnceleniyor</span>
+                                            break;
+                                        case KooperatifYonetim.Core.Enums.BildirimDurum.Cozuldu:
+                                            <span class="badge bg-success">Çözüldü</span>
+                                            break;
+                                    }
+                                </td>
+                                <td class="text-end">
+                                    @if (isVeteriner && b.Durum != KooperatifYonetim.Core.Enums.BildirimDurum.Cozuldu)
+                                    {
+                                        <a asp-action="DurumGuncelle" asp-route-id="@b.BildirimId"
+                                           class="btn btn-sm btn-outline-primary">
+                                            <i class="bi bi-arrow-repeat me-1"></i>Güncelle
+                                        </a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>
