@@ -197,6 +197,42 @@ namespace KooperatifYonetim.Data.Migrations
                     b.ToTable("Araziler");
                 });
 
+            modelBuilder.Entity("KooperatifYonetim.Core.Entities.BesiHareketi", b =>
+                {
+                    b.Property<int>("HareketId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HareketId"));
+
+                    b.Property<int>("AhirId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HareketTipi")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Miktar")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<string>("Notlar")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Tarih")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("YemTuruId")
+                        .HasColumnType("int");
+
+                    b.HasKey("HareketId");
+
+                    b.HasIndex("AhirId");
+
+                    b.HasIndex("YemTuruId");
+
+                    b.ToTable("BesiHareketleri");
+                });
+
             modelBuilder.Entity("KooperatifYonetim.Core.Entities.BesiStok", b =>
                 {
                     b.Property<int>("StokId")
@@ -207,10 +243,6 @@ namespace KooperatifYonetim.Data.Migrations
 
                     b.Property<int>("AhirId")
                         .HasColumnType("int");
-
-                    b.Property<string>("BesiTuru")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("EsikMiktar")
                         .HasPrecision(10, 2)
@@ -223,11 +255,55 @@ namespace KooperatifYonetim.Data.Migrations
                     b.Property<DateTime>("SonGuncelleme")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("YemTuruId")
+                        .HasColumnType("int");
+
                     b.HasKey("StokId");
 
                     b.HasIndex("AhirId");
 
+                    b.HasIndex("YemTuruId");
+
                     b.ToTable("BesiStoklar");
+                });
+
+            modelBuilder.Entity("KooperatifYonetim.Core.Entities.Bildirim", b =>
+                {
+                    b.Property<int>("BildirimId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BildirimId"));
+
+                    b.Property<string>("AliciId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Baslik")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("BildirimTipi")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IlgiliKayitId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Mesaj")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Okundu")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("OlusturmaTarihi")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("BildirimId");
+
+                    b.HasIndex("AliciId");
+
+                    b.ToTable("Bildirimler");
                 });
 
             modelBuilder.Entity("KooperatifYonetim.Core.Entities.Ekin", b =>
@@ -247,9 +323,8 @@ namespace KooperatifYonetim.Data.Migrations
                     b.Property<DateTime>("EkimTarihi")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("EkinTuru")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("EkinTuruId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("HasatTarihi")
                         .HasColumnType("datetime2");
@@ -258,36 +333,32 @@ namespace KooperatifYonetim.Data.Migrations
 
                     b.HasIndex("AraziId");
 
+                    b.HasIndex("EkinTuruId");
+
                     b.ToTable("Ekinler");
                 });
 
-            modelBuilder.Entity("KooperatifYonetim.Core.Entities.GunlukBesiGirisi", b =>
+            modelBuilder.Entity("KooperatifYonetim.Core.Entities.EkinTuru", b =>
                 {
-                    b.Property<int>("GirisId")
+                    b.Property<int>("EkinTuruId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GirisId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EkinTuruId"));
 
-                    b.Property<int>("AhirId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("BesiTuru")
+                    b.Property<string>("Ad")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Tarih")
-                        .HasColumnType("datetime2");
+                    b.Property<bool>("AktifMi")
+                        .HasColumnType("bit");
 
-                    b.Property<decimal>("YedirildenMiktar")
-                        .HasPrecision(10, 2)
-                        .HasColumnType("decimal(10,2)");
+                    b.Property<int>("ToplamaTipi")
+                        .HasColumnType("int");
 
-                    b.HasKey("GirisId");
+                    b.HasKey("EkinTuruId");
 
-                    b.HasIndex("AhirId");
-
-                    b.ToTable("GunlukBesiGirisleri");
+                    b.ToTable("EkinTurleri");
                 });
 
             modelBuilder.Entity("KooperatifYonetim.Core.Entities.HayvanHastalikBildirimi", b =>
@@ -327,6 +398,73 @@ namespace KooperatifYonetim.Data.Migrations
                     b.HasIndex("VeterinerId");
 
                     b.ToTable("HayvanHastalikBildirimler");
+                });
+
+            modelBuilder.Entity("KooperatifYonetim.Core.Entities.Mesaj", b =>
+                {
+                    b.Property<int>("MesajId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MesajId"));
+
+                    b.Property<string>("AliciId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("GonderenId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("GonderimTarihi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Icerik")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Konu")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("OkunduMu")
+                        .HasColumnType("bit");
+
+                    b.HasKey("MesajId");
+
+                    b.HasIndex("AliciId");
+
+                    b.HasIndex("GonderenId");
+
+                    b.ToTable("Mesajlar");
+                });
+
+            modelBuilder.Entity("KooperatifYonetim.Core.Entities.OdemeDonemi", b =>
+                {
+                    b.Property<int>("OdemeDonemiId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OdemeDonemiId"));
+
+                    b.Property<int>("Ay")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Durum")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("OnayTarihi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Yil")
+                        .HasColumnType("int");
+
+                    b.HasKey("OdemeDonemiId");
+
+                    b.HasIndex("Yil", "Ay")
+                        .IsUnique();
+
+                    b.ToTable("OdemeDonemleri");
                 });
 
             modelBuilder.Entity("KooperatifYonetim.Core.Entities.SutUretimi", b =>
@@ -436,6 +574,77 @@ namespace KooperatifYonetim.Data.Migrations
                     b.ToTable("TarimIslemler");
                 });
 
+            modelBuilder.Entity("KooperatifYonetim.Core.Entities.UreticiOdeme", b =>
+                {
+                    b.Property<int>("UreticiOdemeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UreticiOdemeId"));
+
+                    b.Property<string>("OdemeDetay")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OdemeDonemiId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("ToplamEkinKg")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<decimal>("ToplamSutLitre")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<decimal>("ToplamTutar")
+                        .HasPrecision(12, 2)
+                        .HasColumnType("decimal(12,2)");
+
+                    b.Property<string>("UreticiId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UreticiOdemeId");
+
+                    b.HasIndex("OdemeDonemiId");
+
+                    b.HasIndex("UreticiId");
+
+                    b.ToTable("UreticiOdemeler");
+                });
+
+            modelBuilder.Entity("KooperatifYonetim.Core.Entities.UrunFiyat", b =>
+                {
+                    b.Property<int>("UrunFiyatId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UrunFiyatId"));
+
+                    b.Property<DateTime>("BaslangicTarihi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("BirimFiyat")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<DateTime?>("BitisTarihi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("EkinTuruId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("SutMu")
+                        .HasColumnType("bit");
+
+                    b.HasKey("UrunFiyatId");
+
+                    b.HasIndex("EkinTuruId");
+
+                    b.ToTable("UrunFiyatlar");
+                });
+
             modelBuilder.Entity("KooperatifYonetim.Core.Entities.UrunTemin", b =>
                 {
                     b.Property<int>("UrunTeminId")
@@ -509,6 +718,74 @@ namespace KooperatifYonetim.Data.Migrations
                     b.HasIndex("VeterinerId");
 
                     b.ToTable("VeterinerBakimlar");
+                });
+
+            modelBuilder.Entity("KooperatifYonetim.Core.Entities.YemTedarikBasvuru", b =>
+                {
+                    b.Property<int>("BasvuruId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BasvuruId"));
+
+                    b.Property<string>("Aciklama")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("AhirId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("BasvuruTarihi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Durum")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TalepMiktar")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<string>("UreticiId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("YemTuruId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("YoneticiNotu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("BasvuruId");
+
+                    b.HasIndex("AhirId");
+
+                    b.HasIndex("UreticiId");
+
+                    b.HasIndex("YemTuruId");
+
+                    b.ToTable("YemTedarikBasvurulari");
+                });
+
+            modelBuilder.Entity("KooperatifYonetim.Core.Entities.YemTuru", b =>
+                {
+                    b.Property<int>("YemTuruId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("YemTuruId"));
+
+                    b.Property<string>("Ad")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("AktifMi")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Birim")
+                        .HasColumnType("int");
+
+                    b.HasKey("YemTuruId");
+
+                    b.ToTable("YemTurleri");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -639,6 +916,25 @@ namespace KooperatifYonetim.Data.Migrations
                     b.Navigation("Uretici");
                 });
 
+            modelBuilder.Entity("KooperatifYonetim.Core.Entities.BesiHareketi", b =>
+                {
+                    b.HasOne("KooperatifYonetim.Core.Entities.Ahir", "Ahir")
+                        .WithMany("BesiHareketleri")
+                        .HasForeignKey("AhirId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("KooperatifYonetim.Core.Entities.YemTuru", "YemTuru")
+                        .WithMany("BesiHareketleri")
+                        .HasForeignKey("YemTuruId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Ahir");
+
+                    b.Navigation("YemTuru");
+                });
+
             modelBuilder.Entity("KooperatifYonetim.Core.Entities.BesiStok", b =>
                 {
                     b.HasOne("KooperatifYonetim.Core.Entities.Ahir", "Ahir")
@@ -647,7 +943,26 @@ namespace KooperatifYonetim.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("KooperatifYonetim.Core.Entities.YemTuru", "YemTuru")
+                        .WithMany("BesiStoklar")
+                        .HasForeignKey("YemTuruId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Ahir");
+
+                    b.Navigation("YemTuru");
+                });
+
+            modelBuilder.Entity("KooperatifYonetim.Core.Entities.Bildirim", b =>
+                {
+                    b.HasOne("KooperatifYonetim.Core.Entities.AppUser", "Alici")
+                        .WithMany()
+                        .HasForeignKey("AliciId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Alici");
                 });
 
             modelBuilder.Entity("KooperatifYonetim.Core.Entities.Ekin", b =>
@@ -658,18 +973,15 @@ namespace KooperatifYonetim.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Arazi");
-                });
-
-            modelBuilder.Entity("KooperatifYonetim.Core.Entities.GunlukBesiGirisi", b =>
-                {
-                    b.HasOne("KooperatifYonetim.Core.Entities.Ahir", "Ahir")
-                        .WithMany("GunlukBesiGirisler")
-                        .HasForeignKey("AhirId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("KooperatifYonetim.Core.Entities.EkinTuru", "EkinTuruNavigation")
+                        .WithMany("Ekinler")
+                        .HasForeignKey("EkinTuruId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Ahir");
+                    b.Navigation("Arazi");
+
+                    b.Navigation("EkinTuruNavigation");
                 });
 
             modelBuilder.Entity("KooperatifYonetim.Core.Entities.HayvanHastalikBildirimi", b =>
@@ -696,6 +1008,25 @@ namespace KooperatifYonetim.Data.Migrations
                     b.Navigation("Uretici");
 
                     b.Navigation("Veteriner");
+                });
+
+            modelBuilder.Entity("KooperatifYonetim.Core.Entities.Mesaj", b =>
+                {
+                    b.HasOne("KooperatifYonetim.Core.Entities.AppUser", "Alici")
+                        .WithMany()
+                        .HasForeignKey("AliciId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("KooperatifYonetim.Core.Entities.AppUser", "Gonderen")
+                        .WithMany()
+                        .HasForeignKey("GonderenId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Alici");
+
+                    b.Navigation("Gonderen");
                 });
 
             modelBuilder.Entity("KooperatifYonetim.Core.Entities.SutUretimi", b =>
@@ -754,6 +1085,35 @@ namespace KooperatifYonetim.Data.Migrations
                     b.Navigation("Ekin");
                 });
 
+            modelBuilder.Entity("KooperatifYonetim.Core.Entities.UreticiOdeme", b =>
+                {
+                    b.HasOne("KooperatifYonetim.Core.Entities.OdemeDonemi", "OdemeDonemi")
+                        .WithMany("UreticiOdemeler")
+                        .HasForeignKey("OdemeDonemiId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KooperatifYonetim.Core.Entities.AppUser", "Uretici")
+                        .WithMany()
+                        .HasForeignKey("UreticiId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("OdemeDonemi");
+
+                    b.Navigation("Uretici");
+                });
+
+            modelBuilder.Entity("KooperatifYonetim.Core.Entities.UrunFiyat", b =>
+                {
+                    b.HasOne("KooperatifYonetim.Core.Entities.EkinTuru", "EkinTuru")
+                        .WithMany()
+                        .HasForeignKey("EkinTuruId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("EkinTuru");
+                });
+
             modelBuilder.Entity("KooperatifYonetim.Core.Entities.UrunTemin", b =>
                 {
                     b.HasOne("KooperatifYonetim.Core.Entities.Arazi", "Arazi")
@@ -790,6 +1150,33 @@ namespace KooperatifYonetim.Data.Migrations
                     b.Navigation("Ahir");
 
                     b.Navigation("Veteriner");
+                });
+
+            modelBuilder.Entity("KooperatifYonetim.Core.Entities.YemTedarikBasvuru", b =>
+                {
+                    b.HasOne("KooperatifYonetim.Core.Entities.Ahir", "Ahir")
+                        .WithMany("YemTedarikBasvurular")
+                        .HasForeignKey("AhirId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("KooperatifYonetim.Core.Entities.AppUser", "Uretici")
+                        .WithMany()
+                        .HasForeignKey("UreticiId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("KooperatifYonetim.Core.Entities.YemTuru", "YemTuru")
+                        .WithMany("TedarikBasvurulari")
+                        .HasForeignKey("YemTuruId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Ahir");
+
+                    b.Navigation("Uretici");
+
+                    b.Navigation("YemTuru");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -845,15 +1232,17 @@ namespace KooperatifYonetim.Data.Migrations
 
             modelBuilder.Entity("KooperatifYonetim.Core.Entities.Ahir", b =>
                 {
-                    b.Navigation("BesiStoklar");
+                    b.Navigation("BesiHareketleri");
 
-                    b.Navigation("GunlukBesiGirisler");
+                    b.Navigation("BesiStoklar");
 
                     b.Navigation("HayvanHastalikBildirimler");
 
                     b.Navigation("SutUretimler");
 
                     b.Navigation("VeterinerBakimlar");
+
+                    b.Navigation("YemTedarikBasvurular");
                 });
 
             modelBuilder.Entity("KooperatifYonetim.Core.Entities.AppUser", b =>
@@ -875,6 +1264,25 @@ namespace KooperatifYonetim.Data.Migrations
                     b.Navigation("HastalıkBildirimler");
 
                     b.Navigation("TarimIslemler");
+                });
+
+            modelBuilder.Entity("KooperatifYonetim.Core.Entities.EkinTuru", b =>
+                {
+                    b.Navigation("Ekinler");
+                });
+
+            modelBuilder.Entity("KooperatifYonetim.Core.Entities.OdemeDonemi", b =>
+                {
+                    b.Navigation("UreticiOdemeler");
+                });
+
+            modelBuilder.Entity("KooperatifYonetim.Core.Entities.YemTuru", b =>
+                {
+                    b.Navigation("BesiHareketleri");
+
+                    b.Navigation("BesiStoklar");
+
+                    b.Navigation("TedarikBasvurulari");
                 });
 #pragma warning restore 612, 618
         }

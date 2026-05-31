@@ -1,0 +1,65 @@
+@model KooperatifYonetim.Core.Entities.YemTedarikBasvuru
+@{
+    ViewData["Title"] = "Başvuru Durumu Güncelle";
+    var birim = Model.YemTuru?.Birim == KooperatifYonetim.Core.Enums.YemBirim.Balya ? "balya" : "çuval";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Başvuru Durumu Güncelle</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-4 p-3 bg-light rounded">
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <div class="text-muted small">Üretici</div>
+                            <div class="fw-semibold">@Model.Uretici?.UserName</div>
+                        </div>
+                        <div class="col-6">
+                            <div class="text-muted small">Ahır</div>
+                            <div class="fw-semibold">@Model.Ahir?.Ad</div>
+                        </div>
+                        <div class="col-6">
+                            <div class="text-muted small">Yem Türü</div>
+                            <div class="fw-semibold">@Model.YemTuru?.Ad</div>
+                        </div>
+                        <div class="col-6">
+                            <div class="text-muted small">Talep Miktarı</div>
+                            <div class="fw-semibold">@Model.TalepMiktar.ToString("N1") @birim</div>
+                        </div>
+                        @if (!string.IsNullOrEmpty(Model.Aciklama))
+                        {
+                            <div class="col-12">
+                                <div class="text-muted small">Açıklama</div>
+                                <div>@Model.Aciklama</div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <form asp-action="DurumGuncelle" asp-route-id="@Model.BasvuruId" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-3">
+                        <label class="form-label">Durum</label>
+                        <select name="durum" class="form-select" asp-items="ViewBag.DurumListesi"></select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Yönetici Notu</label>
+                        <textarea name="yoneticiNotu" class="form-control" rows="3">@Model.YoneticiNotu</textarea>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-secondary">
+                            <i class="bi bi-check-circle me-1"></i>Güncelle
+                        </button>
+                        <a asp-action="Index" class="btn btn-outline-secondary">İptal</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

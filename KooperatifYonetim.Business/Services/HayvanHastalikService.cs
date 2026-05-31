@@ -38,6 +38,20 @@ namespace KooperatifYonetim.Business.Services
         {
             _db.HayvanHastalikBildirimler.Add(bildirim);
             await _db.SaveChangesAsync();
+
+            if (!string.IsNullOrEmpty(bildirim.VeterinerId))
+            {
+                var ahir = await _db.Ahirlar.FindAsync(bildirim.AhirId);
+                _db.Bildirimler.Add(new Core.Entities.Bildirim
+                {
+                    AliciId = bildirim.VeterinerId,
+                    Baslik = "Yeni Hayvan Hastalık Bildirimi",
+                    Mesaj = $"'{ahir?.Ad ?? "ahır"}' için hayvan hastalık bildirimi oluşturuldu.",
+                    BildirimTipi = Core.Enums.BildirimTipi.HayvanHastalik,
+                    IlgiliKayitId = bildirim.BildirimId
+                });
+                await _db.SaveChangesAsync();
+            }
         }
 
         public async Task DurumGuncelleAsync(int id, BildirimDurum yeniDurum, string veterinerId)

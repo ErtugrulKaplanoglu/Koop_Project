@@ -35,6 +35,8 @@
                           User.IsInRole("Tedarikci") ? "Tedarikçi" : "Kullanıcı")
                     </span>
                     <span class="text-white-50 small d-none d-md-inline">@User.Identity.Name</span>
+                    @await Component.InvokeAsync("MesajZili")
+                    @await Component.InvokeAsync("BildirimZili")
                     <form asp-controller="Account" asp-action="Logout" method="post" class="mb-0">
                         @Html.AntiForgeryToken()
                         <button type="submit" class="btn btn-outline-light btn-sm">

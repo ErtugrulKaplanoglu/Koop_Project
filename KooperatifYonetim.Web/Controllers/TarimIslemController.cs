@@ -157,7 +157,7 @@ namespace KooperatifYonetim.Web.Controllers
         {
             var userId = _userManager.GetUserId(User)!;
             var ekinler = await _ekinService.GetListeAsync(userId, User.IsInRole("Yonetici"));
-            return ekinler.Select(e => new SelectListItem($"{e.EkinTuru} — {e.Arazi?.Ad}", e.EkinId.ToString()));
+            return ekinler.Select(e => new SelectListItem($"{e.EkinTuruNavigation?.Ad ?? "?"} — {e.Arazi?.Ad}", e.EkinId.ToString()));
         }
     }
 }

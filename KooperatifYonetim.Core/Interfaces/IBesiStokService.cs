@@ -9,5 +9,9 @@ namespace KooperatifYonetim.Core.Interfaces
         Task CreateAsync(BesiStok stok);
         Task UpdateAsync(BesiStok stok);
         Task DeleteAsync(int id);
+        Task StokEkleAsync(int stokId, decimal miktar, string? notlar);
+        Task TuketimGirAsync(int stokId, decimal miktar, string? notlar);
+        Task EsikGuncelleAsync(int stokId, decimal esikMiktar);
+        Task<IEnumerable<BesiHareketi>> GetHareketlerAsync(int stokId);
     }
 }

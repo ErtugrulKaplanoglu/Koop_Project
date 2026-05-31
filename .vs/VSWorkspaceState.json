@@ -1,8 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\KooperatifYonetim.Web"
+    "\\KooperatifYonetim.Web",
+    "\\KooperatifYonetim.Web\\Views",
+    "\\KooperatifYonetim.Web\\Views\\Fiyat",
+    "\\KooperatifYonetim.Web\\Views\\HayvanHastalik",
+    "\\KooperatifYonetim.Web\\Views\\Kullanici",
+    "\\KooperatifYonetim.Web\\Views\\Mesaj",
+    "\\KooperatifYonetim.Web\\Views\\OdemeDonemi",
+    "\\KooperatifYonetim.Web\\Views\\Rapor",
+    "\\KooperatifYonetim.Web\\Views\\Shared"
   ],
-  "SelectedNode": "\\KooperatifYonetim.Web\\KooperatifYonetim.Web.csproj",
+  "SelectedNode": "\\KooperatifYonetim.Web\\Views\\Account",
   "PreviewInSolutionExplorer": false
 }

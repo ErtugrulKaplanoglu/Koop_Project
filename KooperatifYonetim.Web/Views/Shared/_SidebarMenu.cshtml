@@ -18,6 +18,26 @@
             <i class="bi bi-people me-2"></i> Kullanıcı Yönetimi
         </a>
     </li>
+    <li class="nav-item mb-1">
+        <a asp-controller="EkinTuru" asp-action="Index" class="nav-link sidebar-link @ActiveClass("EkinTuru")">
+            <i class="bi bi-flower2 me-2"></i> Ekin Türleri
+        </a>
+    </li>
+    <li class="nav-item mb-1">
+        <a asp-controller="YemTuru" asp-action="Index" class="nav-link sidebar-link @ActiveClass("YemTuru")">
+            <i class="bi bi-bag me-2"></i> Yem Türleri
+        </a>
+    </li>
+    <li class="nav-item mb-1">
+        <a asp-controller="Fiyat" asp-action="Index" class="nav-link sidebar-link @ActiveClass("Fiyat")">
+            <i class="bi bi-tag me-2"></i> Ürün Fiyatları
+        </a>
+    </li>
+    <li class="nav-item mb-1">
+        <a asp-controller="OdemeDonemi" asp-action="Index" class="nav-link sidebar-link @ActiveClass("OdemeDonemi")">
+            <i class="bi bi-cash-coin me-2"></i> Ödeme Dönemleri
+        </a>
+    </li>
     <li class="sidebar-section-label">TARIM</li>
     <li class="nav-item mb-1">
         <a asp-controller="Arazi" asp-action="Index" class="nav-link sidebar-link @ActiveClass("Arazi")">
@@ -53,6 +73,28 @@
     <li class="nav-item mb-1">
         <a asp-controller="HayvanHastalik" asp-action="Index" class="nav-link sidebar-link @ActiveClass("HayvanHastalik")">
             <i class="bi bi-heart-pulse me-2"></i> Hayvan Hastalıkları
+        </a>
+    </li>
+    <li class="nav-item mb-1">
+        <a asp-controller="YemTedarik" asp-action="Index" class="nav-link sidebar-link @ActiveClass("YemTedarik")">
+            <i class="bi bi-clipboard-check me-2"></i> Yem Tedarik
+        </a>
+    </li>
+    <li class="sidebar-section-label">RAPORLAR</li>
+    <li class="nav-item mb-1">
+        <a asp-controller="Rapor" asp-action="YoneticiRaporu" class="nav-link sidebar-link @ActiveClass("Rapor")">
+            <i class="bi bi-bar-chart-line me-2"></i> Raporlar
+        </a>
+    </li>
+    <li class="sidebar-section-label">MESAJLAR & BİLDİRİMLER</li>
+    <li class="nav-item mb-1">
+        <a asp-controller="Mesaj" asp-action="Inbox" class="nav-link sidebar-link @ActiveClass("Mesaj")">
+            <i class="bi bi-envelope me-2"></i> Mesajlarım
+        </a>
+    </li>
+    <li class="nav-item mb-1">
+        <a asp-controller="Bildirim" asp-action="Index" class="nav-link sidebar-link @ActiveClass("Bildirim")">
+            <i class="bi bi-bell me-2"></i> Bildirimlerim
         </a>
     </li>
 }
@@ -91,8 +133,8 @@ else if (User.IsInRole("Uretici"))
         </a>
     </li>
     <li class="nav-item mb-1">
-        <a asp-controller="BesiGiris" asp-action="Index" class="nav-link sidebar-link @ActiveClass("BesiGiris")">
-            <i class="bi bi-basket me-2"></i> Besi Girişi
+        <a asp-controller="BesiStok" asp-action="Index" class="nav-link sidebar-link @ActiveClass("BesiStok")">
+            <i class="bi bi-archive me-2"></i> Besi Yönetimi
         </a>
     </li>
     <li class="nav-item mb-1">
@@ -103,6 +145,33 @@ else if (User.IsInRole("Uretici"))
     <li class="nav-item mb-1">
         <a asp-controller="HayvanHastalik" asp-action="Index" class="nav-link sidebar-link @ActiveClass("HayvanHastalik")">
             <i class="bi bi-heart-pulse me-2"></i> Hayvan Hastalıkları
+        </a>
+    </li>
+    <li class="sidebar-section-label">ÖDEMELERİM</li>
+    <li class="nav-item mb-1">
+        <a asp-controller="OdemeDonemi" asp-action="UreticiGecmis" class="nav-link sidebar-link">
+            <i class="bi bi-cash-coin me-2"></i> Ödeme Geçmişim
+        </a>
+    </li>
+    <li class="nav-item mb-1">
+        <a asp-controller="YemTedarik" asp-action="Index" class="nav-link sidebar-link @ActiveClass("YemTedarik")">
+            <i class="bi bi-clipboard-check me-2"></i> Yem Tedarik
+        </a>
+    </li>
+    <li class="nav-item mb-1">
+        <a asp-controller="Rapor" asp-action="UreticiRaporu" class="nav-link sidebar-link @ActiveClass("Rapor")">
+            <i class="bi bi-bar-chart-line me-2"></i> Raporlarım
+        </a>
+    </li>
+    <li class="sidebar-section-label">MESAJLAR & BİLDİRİMLER</li>
+    <li class="nav-item mb-1">
+        <a asp-controller="Mesaj" asp-action="Inbox" class="nav-link sidebar-link @ActiveClass("Mesaj")">
+            <i class="bi bi-envelope me-2"></i> Mesajlarım
+        </a>
+    </li>
+    <li class="nav-item mb-1">
+        <a asp-controller="Bildirim" asp-action="Index" class="nav-link sidebar-link @ActiveClass("Bildirim")">
+            <i class="bi bi-bell me-2"></i> Bildirimlerim
         </a>
     </li>
 }
@@ -122,6 +191,17 @@ else if (User.IsInRole("ZiraatMuhendisi"))
     <li class="nav-item mb-1">
         <a asp-controller="Arazi" asp-action="Index" class="nav-link sidebar-link @ActiveClass("Arazi")">
             <i class="bi bi-map me-2"></i> Arazi Listesi
+        </a>
+    </li>
+    <li class="sidebar-section-label">MESAJLAR & BİLDİRİMLER</li>
+    <li class="nav-item mb-1">
+        <a asp-controller="Mesaj" asp-action="Inbox" class="nav-link sidebar-link @ActiveClass("Mesaj")">
+            <i class="bi bi-envelope me-2"></i> Mesajlarım
+        </a>
+    </li>
+    <li class="nav-item mb-1">
+        <a asp-controller="Bildirim" asp-action="Index" class="nav-link sidebar-link @ActiveClass("Bildirim")">
+            <i class="bi bi-bell me-2"></i> Bildirimlerim
         </a>
     </li>
 }
@@ -148,6 +228,17 @@ else if (User.IsInRole("Veteriner"))
             <i class="bi bi-house me-2"></i> Ahır Listesi
         </a>
     </li>
+    <li class="sidebar-section-label">MESAJLAR & BİLDİRİMLER</li>
+    <li class="nav-item mb-1">
+        <a asp-controller="Mesaj" asp-action="Inbox" class="nav-link sidebar-link @ActiveClass("Mesaj")">
+            <i class="bi bi-envelope me-2"></i> Mesajlarım
+        </a>
+    </li>
+    <li class="nav-item mb-1">
+        <a asp-controller="Bildirim" asp-action="Index" class="nav-link sidebar-link @ActiveClass("Bildirim")">
+            <i class="bi bi-bell me-2"></i> Bildirimlerim
+        </a>
+    </li>
 }
 else if (User.IsInRole("Toptanci"))
 {
@@ -167,6 +258,12 @@ else if (User.IsInRole("Toptanci"))
             <i class="bi bi-map me-2"></i> Arazi Listesi
         </a>
     </li>
+    <li class="sidebar-section-label">MESAJLAR</li>
+    <li class="nav-item mb-1">
+        <a asp-controller="Mesaj" asp-action="Inbox" class="nav-link sidebar-link @ActiveClass("Mesaj")">
+            <i class="bi bi-envelope me-2"></i> Mesajlarım
+        </a>
+    </li>
 }
 else if (User.IsInRole("Mandira"))
 {
@@ -181,6 +278,17 @@ else if (User.IsInRole("Mandira"))
             <i class="bi bi-droplet me-2"></i> Süt Kayıtları
         </a>
     </li>
+    <li class="nav-item mb-1">
+        <a asp-controller="Rapor" asp-action="MandiraRaporu" class="nav-link sidebar-link @ActiveClass("Rapor")">
+            <i class="bi bi-bar-chart-line me-2"></i> Süt Raporları
+        </a>
+    </li>
+    <li class="sidebar-section-label">MESAJLAR</li>
+    <li class="nav-item mb-1">
+        <a asp-controller="Mesaj" asp-action="Inbox" class="nav-link sidebar-link @ActiveClass("Mesaj")">
+            <i class="bi bi-envelope me-2"></i> Mesajlarım
+        </a>
+    </li>
 }
 else if (User.IsInRole("Tedarikci"))
 {
@@ -193,6 +301,12 @@ else if (User.IsInRole("Tedarikci"))
     <li class="nav-item mb-1">
         <a asp-controller="BesiStok" asp-action="Index" class="nav-link sidebar-link @ActiveClass("BesiStok")">
             <i class="bi bi-archive me-2"></i> Besi Stok Durumları
+        </a>
+    </li>
+    <li class="sidebar-section-label">MESAJLAR</li>
+    <li class="nav-item mb-1">
+        <a asp-controller="Mesaj" asp-action="Inbox" class="nav-link sidebar-link @ActiveClass("Mesaj")">
+            <i class="bi bi-envelope me-2"></i> Mesajlarım
         </a>
     </li>
 }

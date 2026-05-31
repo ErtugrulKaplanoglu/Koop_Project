@@ -167,7 +167,7 @@
                         @foreach (var ekin in Model.Ekinler.OrderByDescending(e => e.EkimTarihi))
                         {
                             <tr>
-                                <td class="fw-semibold">@ekin.EkinTuru</td>
+                                <td class="fw-semibold">@ekin.EkinTuruNavigation?.Ad</td>
                                 <td>@ekin.EkimTarihi.ToString("dd.MM.yyyy")</td>
                                 <td>@(ekin.HasatTarihi?.ToString("dd.MM.yyyy") ?? "—")</td>
                                 <td>

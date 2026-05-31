@@ -52,13 +52,14 @@ namespace KooperatifYonetim.Business.Services
 
             var yaklasanIslemler = await _db.TarimIslemler
                 .Include(i => i.Ekin).ThenInclude(e => e.Arazi)
+                .Include(i => i.Ekin).ThenInclude(e => e.EkinTuruNavigation)
                 .Where(i => ekinIds.Contains(i.EkinId) && !i.Tamamlandi
                             && i.PlanlananTarih >= DateTime.Today && i.PlanlananTarih <= haftaSonu)
                 .OrderBy(i => i.PlanlananTarih)
                 .Take(5)
                 .Select(i => new YaklasanIslemItemDto
                 {
-                    EkinTuru = i.Ekin.EkinTuru,
+                    EkinTuru = i.Ekin.EkinTuruNavigation != null ? i.Ekin.EkinTuruNavigation.Ad : string.Empty,
                     AraziAdi = i.Ekin.Arazi != null ? i.Ekin.Arazi.Ad : string.Empty,
                     IslemTuru = i.IslemTuru.ToString(),
                     PlanlananTarih = i.PlanlananTarih

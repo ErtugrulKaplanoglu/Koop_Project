@@ -26,18 +26,24 @@
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="BesiTuru" class="form-label fw-semibold"></label>
-                        <input asp-for="BesiTuru" class="form-control" placeholder="Örn: Arpa, Silaj, Yem" />
-                        <span asp-validation-for="BesiTuru" class="text-danger small"></span>
+                        <label asp-for="YemTuruId" class="form-label fw-semibold"></label>
+                        <select asp-for="YemTuruId" asp-items="Model.YemTuruListesi" id="yemTuruSelect" class="form-select">
+                            <option value="">— Yem Türü Seçin —</option>
+                        </select>
+                        <span asp-validation-for="YemTuruId" class="text-danger small"></span>
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="MevcutMiktar" class="form-label fw-semibold"></label>
+                        <label asp-for="MevcutMiktar" class="form-label fw-semibold">
+                            Mevcut Miktar (<span id="birimLabel">birim</span>)
+                        </label>
                         <input asp-for="MevcutMiktar" type="number" step="0.1" class="form-control" />
                     </div>
 
                     <div class="mb-4">
-                        <label asp-for="EsikMiktar" class="form-label fw-semibold"></label>
+                        <label asp-for="EsikMiktar" class="form-label fw-semibold">
+                            Eşik Miktar (<span id="birimLabel2">birim</span>)
+                        </label>
                         <input asp-for="EsikMiktar" type="number" step="0.1" class="form-control" />
                         <div class="form-text">Bu seviyenin altına düşünce kritik uyarısı gösterilir.</div>
                     </div>
@@ -53,3 +59,17 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        const yemBirimMap = @Html.Raw(ViewBag.YemBirimMap ?? "{}");
+        const select = document.getElementById('yemTuruSelect');
+        function updateBirim() {
+            const birim = yemBirimMap[select.value] || 'birim';
+            document.getElementById('birimLabel').textContent = birim;
+            document.getElementById('birimLabel2').textContent = birim;
+        }
+        select.addEventListener('change', updateBirim);
+        updateBirim();
+    </script>
+}

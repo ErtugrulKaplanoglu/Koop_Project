@@ -1,0 +1,61 @@
+@model KooperatifYonetim.Web.Models.EsikGuncelleViewModel
+@{
+    ViewData["Title"] = "Eşik Güncelle";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0"><i class="bi bi-sliders me-2"></i>Eşik Miktarı Güncelle</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-4 p-3 bg-light rounded">
+                    <div class="row g-2 text-center">
+                        <div class="col-4">
+                            <div class="text-muted small">Ahır</div>
+                            <div class="fw-semibold">@Model.AhirAd</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="text-muted small">Yem</div>
+                            <div class="fw-semibold">@Model.YemTuruAd</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="text-muted small">Mevcut</div>
+                            <div class="fw-semibold">@Model.MevcutMiktar.ToString("N1") @Model.Birim</div>
+                        </div>
+                    </div>
+                </div>
+
+                <form asp-action="EsikGuncelle" method="post">
+                    <input type="hidden" asp-for="StokId" />
+                    <input type="hidden" asp-for="Birim" />
+                    <input type="hidden" asp-for="AhirAd" />
+                    <input type="hidden" asp-for="YemTuruAd" />
+                    <input type="hidden" asp-for="MevcutMiktar" />
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger d-none"></div>
+
+                    <div class="mb-4">
+                        <label asp-for="EsikMiktar" class="form-label">
+                            Eşik Miktar (@Model.Birim)
+                        </label>
+                        <input asp-for="EsikMiktar" class="form-control" type="number" step="0.1" min="0" />
+                        <span asp-validation-for="EsikMiktar" class="text-danger small"></span>
+                        <div class="form-text">Bu değerin altına düşünce bildirim oluşturulur.</div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-secondary">
+                            <i class="bi bi-check-circle me-1"></i>Güncelle
+                        </button>
+                        <a asp-action="Index" class="btn btn-outline-secondary">İptal</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

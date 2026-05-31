@@ -1,0 +1,34 @@
+@model KooperatifYonetim.Core.Entities.Mesaj
+@{
+    ViewData["Title"] = Model.Konu;
+    var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+    var isGonderen = Model.GonderenId == userId;
+}
+
+<div class="container-fluid py-3">
+    <div class="d-flex align-items-center mb-4 gap-2">
+        <a asp-action="Inbox" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-arrow-left me-1"></i> Gelen Kutusu
+        </a>
+        <a asp-action="Gonderilenler" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-send me-1"></i> Gönderilenler
+        </a>
+        <a asp-action="YeniMesaj" class="btn btn-primary btn-sm ms-auto">
+            <i class="bi bi-pencil-square me-1"></i> Yeni Mesaj
+        </a>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white border-bottom py-3">
+            <h5 class="mb-1">@Model.Konu</h5>
+            <div class="d-flex gap-4 text-muted small">
+                <span><i class="bi bi-person me-1"></i> Gönderen: <strong>@Model.Gonderen.Ad @Model.Gonderen.Soyad</strong></span>
+                <span><i class="bi bi-person-check me-1"></i> Alıcı: <strong>@Model.Alici.Ad @Model.Alici.Soyad</strong></span>
+                <span><i class="bi bi-clock me-1"></i> @Model.GonderimTarihi.ToString("dd MMMM yyyy HH:mm", new System.Globalization.CultureInfo("tr-TR"))</span>
+            </div>
+        </div>
+        <div class="card-body" style="white-space:pre-wrap; min-height:150px">
+            @Model.Icerik
+        </div>
+    </div>
+</div>

@@ -21,7 +21,7 @@ namespace KooperatifYonetim.Business.Services
             await _db.Ahirlar
                 .Include(a => a.Uretici)
                 .Include(a => a.BesiStoklar)
-                .Include(a => a.GunlukBesiGirisler)
+                .Include(a => a.BesiHareketleri)
                 .Include(a => a.SutUretimler).ThenInclude(s => s.Mandira)
                 .Include(a => a.VeterinerBakimlar).ThenInclude(v => v.Veteriner)
                 .Include(a => a.HayvanHastalikBildirimler).ThenInclude(h => h.Veteriner)

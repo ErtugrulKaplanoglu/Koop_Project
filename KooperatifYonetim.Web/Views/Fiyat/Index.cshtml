@@ -1,0 +1,85 @@
+@model IEnumerable<KooperatifYonetim.Core.Entities.UrunFiyat>
+@{
+    ViewData["Title"] = "Ürün Fiyatları";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="fw-bold mb-0">Ürün Fiyatları</h4>
+    <a asp-action="Create" class="btn btn-primary">
+        <i class="bi bi-plus-circle me-1"></i> Yeni Fiyat
+    </a>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show">@TempData["Success"]<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+}
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-0">
+        @if (!Model.Any())
+        {
+            <div class="text-center py-5 text-muted">
+                <i class="bi bi-tag fs-1 d-block mb-2"></i>
+                Henüz fiyat girilmemiş.
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Ürün</th>
+                            <th>Birim Fiyat</th>
+                            <th>Başlangıç</th>
+                            <th>Bitiş</th>
+                            <th>Durum</th>
+                            <th class="text-end">İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var f in Model)
+                        {
+                            var aktif = f.BitisTarihi == null;
+                            <tr class="@(aktif ? "" : "table-secondary text-muted")">
+                                <td class="fw-semibold">
+                                    @if (f.SutMu)
+                                    {
+                                        <i class="bi bi-droplet-half text-info me-1"></i><text>Süt</text>
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-flower1 text-success me-1"></i>@f.EkinTuru?.Ad
+                                    }
+                                </td>
+                                <td>@f.BirimFiyat.ToString("N2") ₺</td>
+                                <td>@f.BaslangicTarihi.ToString("dd.MM.yyyy")</td>
+                                <td>@(f.BitisTarihi?.ToString("dd.MM.yyyy") ?? "—")</td>
+                                <td>
+                                    @if (aktif)
+                                    {
+                                        <span class="badge bg-success">Geçerli</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">Geçmiş</span>
+                                    }
+                                </td>
+                                <td class="text-end">
+                                    <form asp-action="Delete" asp-route-id="@f.UrunFiyatId" method="post" class="d-inline"
+                                          onsubmit="return confirm('Bu fiyatı silmek istediğinizden emin misiniz?')">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>

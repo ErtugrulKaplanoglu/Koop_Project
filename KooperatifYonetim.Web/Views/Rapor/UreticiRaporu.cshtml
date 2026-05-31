@@ -1,0 +1,148 @@
+@model KooperatifYonetim.Web.Models.UreticiRaporuViewModel
+@{
+    ViewData["Title"] = "Aylık Raporlarım";
+    var ayAdlari = new[] { "", "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+                           "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık" };
+    var buYil = DateTime.Today.Year;
+}
+
+<div class="container-fluid py-3">
+    <div class="d-flex align-items-center mb-4 gap-3">
+        <h4 class="mb-0"><i class="bi bi-bar-chart-line me-2 text-success"></i> Aylık Raporlarım</h4>
+        <span class="badge bg-success fs-6">@ayAdlari[Model.Ay] @Model.Yil</span>
+    </div>
+
+    <form method="get" class="card mb-4 border-0 shadow-sm">
+        <div class="card-body d-flex gap-3 align-items-end flex-wrap">
+            <div>
+                <label class="form-label fw-semibold">Yıl</label>
+                <select name="yil" class="form-select" style="width:100px">
+                    @for (int y = buYil; y >= buYil - 3; y--)
+                    {
+                        <option value="@y" selected="@(Model.Yil == y)">@y</option>
+                    }
+                </select>
+            </div>
+            <div>
+                <label class="form-label fw-semibold">Ay</label>
+                <select name="ay" class="form-select" style="width:130px">
+                    @for (int m = 1; m <= 12; m++)
+                    {
+                        <option value="@m" selected="@(Model.Ay == m)">@ayAdlari[m]</option>
+                    }
+                </select>
+            </div>
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-search me-1"></i> Getir
+            </button>
+        </div>
+    </form>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <div class="display-6 fw-bold text-success">@Model.Ozet.ToplamHasatKg.ToString("N1")</div>
+                    <div class="text-muted mt-1"><i class="bi bi-bag-check me-1"></i> Toplam Hasat (kg)</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <div class="display-6 fw-bold text-primary">@Model.Ozet.ToplamSutLitre.ToString("N1")</div>
+                    <div class="text-muted mt-1"><i class="bi bi-droplet me-1"></i> Toplam Süt (lt)</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    @{
+                        var toplamHastalik = Model.Ozet.AcikTarimHastalik + Model.Ozet.AcikHayvanHastalik;
+                    }
+                    <div class="display-6 fw-bold @(toplamHastalik > 0 ? "text-danger" : "text-success")">@toplamHastalik</div>
+                    <div class="text-muted mt-1"><i class="bi bi-exclamation-triangle me-1"></i> Açık Hastalık Bildirimi</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-header bg-white border-bottom">
+            <h6 class="mb-0"><i class="bi bi-calendar-check me-2 text-success"></i> Tarım İşlemleri</h6>
+        </div>
+        <div class="card-body">
+            <canvas id="islemChart" height="100"></canvas>
+        </div>
+    </div>
+
+    <div class="row g-3">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-white border-bottom">
+                    <h6 class="mb-0"><i class="bi bi-bug me-2 text-warning"></i> Açık Bildirimler</h6>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                        <span><i class="bi bi-flower1 me-2 text-success"></i> Tarım Hastalık</span>
+                        <span class="badge @(Model.Ozet.AcikTarimHastalik > 0 ? "bg-danger" : "bg-secondary") fs-6">
+                            @Model.Ozet.AcikTarimHastalik
+                        </span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center py-2">
+                        <span><i class="bi bi-heart-pulse me-2 text-danger"></i> Hayvan Hastalık</span>
+                        <span class="badge @(Model.Ozet.AcikHayvanHastalik > 0 ? "bg-danger" : "bg-secondary") fs-6">
+                            @Model.Ozet.AcikHayvanHastalik
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-white border-bottom">
+                    <h6 class="mb-0"><i class="bi bi-list-check me-2 text-success"></i> İşlem Sayıları</h6>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                        <span><i class="bi bi-water me-2 text-info"></i> Sulama</span>
+                        <span class="badge bg-info text-dark fs-6">@Model.Ozet.SulamaSayisi</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                        <span><i class="bi bi-droplet-half me-2 text-warning"></i> İlaçlama</span>
+                        <span class="badge bg-warning text-dark fs-6">@Model.Ozet.IlaclalaSayisi</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center py-2">
+                        <span><i class="bi bi-bag me-2 text-success"></i> Toplama</span>
+                        <span class="badge bg-success fs-6">@Model.Ozet.ToplamaSayisi</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    new Chart(document.getElementById('islemChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Sulama', 'İlaçlama', 'Toplama'],
+            datasets: [{
+                label: '@ayAdlari[Model.Ay] @Model.Yil İşlem Sayısı',
+                data: [@Model.Ozet.SulamaSayisi, @Model.Ozet.IlaclalaSayisi, @Model.Ozet.ToplamaSayisi],
+                backgroundColor: ['rgba(13,110,253,0.7)', 'rgba(255,193,7,0.7)', 'rgba(25,135,84,0.7)'],
+                borderColor: ['#0d6efd', '#ffc107', '#198754'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+        }
+    });
+</script>
+}

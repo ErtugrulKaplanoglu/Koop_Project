@@ -15,6 +15,7 @@ namespace KooperatifYonetim.Business.Services
         {
             var query = _db.Ekinler
                 .Include(e => e.Arazi).ThenInclude(a => a.Uretici)
+                .Include(e => e.EkinTuruNavigation)
                 .AsQueryable();
 
             if (!isAdmin)
@@ -30,11 +31,15 @@ namespace KooperatifYonetim.Business.Services
                 .ToListAsync();
 
         public async Task<Ekin?> GetByIdAsync(int id)
-            => await _db.Ekinler.Include(e => e.Arazi).FirstOrDefaultAsync(e => e.EkinId == id);
+            => await _db.Ekinler
+                .Include(e => e.Arazi)
+                .Include(e => e.EkinTuruNavigation)
+                .FirstOrDefaultAsync(e => e.EkinId == id);
 
         public async Task<Ekin?> GetDetayAsync(int id)
             => await _db.Ekinler
                 .Include(e => e.Arazi).ThenInclude(a => a.Uretici)
+                .Include(e => e.EkinTuruNavigation)
                 .Include(e => e.TarimIslemler)
                 .Include(e => e.HastalıkBildirimler).ThenInclude(b => b.Uretici)
                 .FirstOrDefaultAsync(e => e.EkinId == id);

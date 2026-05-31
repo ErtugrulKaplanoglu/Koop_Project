@@ -27,9 +27,11 @@
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="EkinTuru" class="form-label fw-semibold"></label>
-                        <input asp-for="EkinTuru" class="form-control" />
-                        <span asp-validation-for="EkinTuru" class="text-danger small"></span>
+                        <label asp-for="EkinTuruId" class="form-label fw-semibold"></label>
+                        <select asp-for="EkinTuruId" asp-items="Model.EkinTuruListesi" class="form-select">
+                            <option value="">— Ekin Türü Seçin —</option>
+                        </select>
+                        <span asp-validation-for="EkinTuruId" class="text-danger small"></span>
                     </div>
 
                     <div class="row g-2 mb-3">

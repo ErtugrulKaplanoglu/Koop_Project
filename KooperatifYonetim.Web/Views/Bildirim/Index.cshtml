@@ -1,0 +1,82 @@
+@model IEnumerable<KooperatifYonetim.Core.Entities.Bildirim>
+@{
+    ViewData["Title"] = "Bildirimlerim";
+    var okunmamisSayisi = Model.Count(b => !b.Okundu);
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold mb-0">Bildirimlerim</h4>
+        <p class="text-muted small mb-0">
+            @Model.Count() bildirim
+            @if (okunmamisSayisi > 0)
+            {
+                <span class="badge bg-danger ms-1">@okunmamisSayisi okunmamış</span>
+            }
+        </p>
+    </div>
+    @if (okunmamisSayisi > 0)
+    {
+        <form asp-action="TumunuOku" method="post">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-check2-all me-1"></i>Tümünü Okundu İşaretle
+            </button>
+        </form>
+    }
+</div>
+
+@if (TempData["Success"] is string msg)
+{
+    <div class="alert alert-success alert-dismissible fade show">
+        @msg <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="d-flex flex-column gap-2">
+    @if (!Model.Any())
+    {
+        <div class="text-center py-5 text-muted">
+            <i class="bi bi-bell-slash fs-1 d-block mb-2"></i>
+            <span>Bildiriminiz bulunmuyor.</span>
+        </div>
+    }
+    else
+    {
+        @foreach (var b in Model)
+        {
+            var bgClass = b.Okundu ? "bg-white" : "bg-primary bg-opacity-10 border-primary";
+            var iconClass = b.BildirimTipi switch
+            {
+                KooperatifYonetim.Core.Enums.BildirimTipi.BesiStok => "bi-box-seam text-warning",
+                KooperatifYonetim.Core.Enums.BildirimTipi.HayvanHastalik => "bi-heart-pulse text-danger",
+                KooperatifYonetim.Core.Enums.BildirimTipi.TarimHastalik => "bi-flower1 text-success",
+                _ => "bi-bell text-secondary"
+            };
+            <div class="card border shadow-sm @bgClass">
+                <div class="card-body py-3 d-flex gap-3 align-items-start">
+                    <div class="fs-4 mt-1">
+                        <i class="bi @iconClass"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <span class="fw-semibold @(b.Okundu ? "" : "text-primary")">@b.Baslik</span>
+                            <small class="text-muted ms-3 text-nowrap">@b.OlusturmaTarihi.ToString("dd.MM.yyyy HH:mm")</small>
+                        </div>
+                        <p class="mb-0 text-muted small mt-1">@b.Mesaj</p>
+                    </div>
+                    @if (!b.Okundu)
+                    {
+                        <form asp-action="OkunduIsaretle" method="post" class="ms-2">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@b.BildirimId" />
+                            <button type="submit" class="btn btn-sm btn-outline-primary" title="Okundu işaretle">
+                                <i class="bi bi-check2"></i>
+                            </button>
+                        </form>
+                    }
+                </div>
+            </div>
+        }
+    }
+</div>

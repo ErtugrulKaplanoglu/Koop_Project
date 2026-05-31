@@ -1,4 +1,5 @@
 using KooperatifYonetim.Core.Entities;
+using KooperatifYonetim.Core.Enums;
 using KooperatifYonetim.Core.Interfaces;
 using KooperatifYonetim.Data;
 using Microsoft.EntityFrameworkCore;
@@ -67,6 +68,21 @@ namespace KooperatifYonetim.Business.Services
                 islem.Tamamlandi = true;
                 await _db.SaveChangesAsync();
             }
+        }
+
+        public async Task<bool> ToplamaMümkünMüAsync(int ekinId)
+        {
+            var ekin = await _db.Ekinler
+                .Include(e => e.EkinTuruNavigation)
+                .FirstOrDefaultAsync(e => e.EkinId == ekinId);
+
+            if (ekin?.EkinTuruNavigation?.ToplamaTipi == ToplamaTipi.TekSefer)
+            {
+                var toplamaMevcutMu = await _db.TarimIslemler
+                    .AnyAsync(t => t.EkinId == ekinId && t.IslemTuru == IslemTuru.Toplama);
+                return !toplamaMevcutMu;
+            }
+            return true;
         }
     }
 }

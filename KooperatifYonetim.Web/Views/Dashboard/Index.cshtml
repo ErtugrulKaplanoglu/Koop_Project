@@ -17,7 +17,6 @@
     </div>
 </div>
 
-<!-- ===== YÖNETİCİ ===== -->
 @if (User.IsInRole("Yonetici"))
 {
     <div class="row g-3 mb-4">
@@ -112,8 +111,6 @@
         </div>
     </div>
 }
-
-<!-- ===== ÜRETİCİ ===== -->
 else if (User.IsInRole("Uretici"))
 {
     <div class="row g-3 mb-4">
@@ -228,8 +225,6 @@ else if (User.IsInRole("Uretici"))
         </div>
     }
 }
-
-<!-- ===== ZİRAAT MÜHENDİSİ ===== -->
 else if (User.IsInRole("ZiraatMuhendisi"))
 {
     <div class="row g-3 mb-4">
@@ -287,8 +282,6 @@ else if (User.IsInRole("ZiraatMuhendisi"))
         </div>
     </div>
 }
-
-<!-- ===== VETERİNER ===== -->
 else if (User.IsInRole("Veteriner"))
 {
     <div class="row g-3 mb-4">
@@ -349,8 +342,6 @@ else if (User.IsInRole("Veteriner"))
         </div>
     </div>
 }
-
-<!-- ===== MANDIRA ===== -->
 else if (User.IsInRole("Mandira"))
 {
     <div class="row g-3 mb-4">
@@ -394,35 +385,7 @@ else if (User.IsInRole("Mandira"))
         </div>
     </div>
 
-    @section Scripts {
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-        <script>
-            const gunler = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.HaftalikSutGrafik.Select(g => g.Gun)));
-            const miktarlar = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.HaftalikSutGrafik.Select(g => g.Miktar)));
-            new Chart(document.getElementById('sutGrafik'), {
-                type: 'bar',
-                data: {
-                    labels: gunler,
-                    datasets: [{
-                        label: 'Süt (L)',
-                        data: miktarlar,
-                        backgroundColor: 'rgba(13,202,240,0.6)',
-                        borderColor: 'rgba(13,202,240,1)',
-                        borderWidth: 1,
-                        borderRadius: 4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: { legend: { display: false } },
-                    scales: { y: { beginAtZero: true } }
-                }
-            });
-        </script>
-    }
 }
-
-<!-- ===== TOPTAN CI ===== -->
 else if (User.IsInRole("Toptanci"))
 {
     <div class="row g-3 mb-4">
@@ -465,8 +428,6 @@ else if (User.IsInRole("Toptanci"))
         </div>
     </div>
 }
-
-<!-- ===== TEDARİKÇİ ===== -->
 else if (User.IsInRole("Tedarikci"))
 {
     <div class="row g-3 mb-4">
@@ -509,11 +470,40 @@ else if (User.IsInRole("Tedarikci"))
         </div>
     </div>
 }
-
 else
 {
     <div class="alert alert-success">
         <i class="bi bi-check-circle me-2"></i>
         Sisteme başarıyla giriş yaptınız. Sol menüden işlemlerinize devam edebilirsiniz.
     </div>
+}
+
+@if (User.IsInRole("Mandira"))
+{
+    @section Scripts {
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+        <script>
+            const gunler = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.HaftalikSutGrafik.Select(g => g.Gun)));
+            const miktarlar = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.HaftalikSutGrafik.Select(g => g.Miktar)));
+            new Chart(document.getElementById('sutGrafik'), {
+                type: 'bar',
+                data: {
+                    labels: gunler,
+                    datasets: [{
+                        label: 'Süt (L)',
+                        data: miktarlar,
+                        backgroundColor: 'rgba(13,202,240,0.6)',
+                        borderColor: 'rgba(13,202,240,1)',
+                        borderWidth: 1,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+        </script>
+    }
 }

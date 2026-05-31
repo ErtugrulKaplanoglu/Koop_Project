@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "oxHEIY1sIoQ=",
+  "dgSpecHash": "w08qKPzfaZA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Alpag\\Desktop\\Koop_Project\\KooperatifYonetim.Data\\KooperatifYonetim.Data.csproj",
+  "projectFilePath": "C:\\Users\\Alpag\\desktop\\Koop_Project\\KooperatifYonetim.Data\\KooperatifYonetim.Data.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Alpag\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Alpag\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

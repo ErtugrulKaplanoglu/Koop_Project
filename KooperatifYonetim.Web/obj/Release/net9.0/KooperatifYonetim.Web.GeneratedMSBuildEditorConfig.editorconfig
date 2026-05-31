@@ -80,12 +80,40 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmVzaVN0b2tcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/BesiStok/EsikGuncelle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmVzaVN0b2tcRXNpa0d1bmNlbGxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/BesiStok/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmVzaVN0b2tcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/BesiStok/StokEkle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmVzaVN0b2tcU3Rva0VrbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/BesiStok/TuketimGir.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmVzaVN0b2tcVHVrZXRpbUdpci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/Bildirim/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmlsZGlyaW1cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/Dashboard/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/EkinTuru/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWtpblR1cnVcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/EkinTuru/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWtpblR1cnVcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/EkinTuru/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWtpblR1cnVcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/Ekin/Create.cshtml]
@@ -102,6 +130,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/Ekin/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWtpblxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/Fiyat/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRml5YXRcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/Fiyat/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRml5YXRcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/HayvanHastalik/Create.cshtml]
@@ -126,6 +162,58 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/Kullanici/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS3VsbGFuaWNpXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/Mesaj/Detay.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVzYWpcRGV0YXkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/Mesaj/Gonderilenler.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVzYWpcR29uZGVyaWxlbmxlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/Mesaj/Inbox.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVzYWpcSW5ib3guY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/Mesaj/YeniMesaj.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVzYWpcWWVuaU1lc2FqLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/OdemeDonemi/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT2RlbWVEb25lbWlcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/OdemeDonemi/Detay.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT2RlbWVEb25lbWlcRGV0YXkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/OdemeDonemi/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT2RlbWVEb25lbWlcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/OdemeDonemi/UreticiGecmis.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT2RlbWVEb25lbWlcVXJldGljaUdlY21pcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/Rapor/MandiraRaporu.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmFwb3JcTWFuZGlyYVJhcG9ydS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/Rapor/UreticiRaporu.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmFwb3JcVXJldGljaVJhcG9ydS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/Rapor/YoneticiRaporu.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmFwb3JcWW9uZXRpY2lSYXBvcnUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/Shared/Components/BildirimZili/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcQmlsZGlyaW1aaWxpXERlZmF1bHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/Shared/Components/MesajZili/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcTWVzYWpaaWxpXERlZmF1bHQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/Shared/Error.cshtml]
@@ -198,6 +286,30 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/VeterinerBakim/Tamamla.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmV0ZXJpbmVyQmFraW1cVGFtYW1sYS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/YemTedarik/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcWWVtVGVkYXJpa1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/YemTedarik/DurumGuncelle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcWWVtVGVkYXJpa1xEdXJ1bUd1bmNlbGxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/YemTedarik/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcWWVtVGVkYXJpa1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/YemTuru/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcWWVtVHVydVxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/YemTuru/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcWWVtVHVydVxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/YemTuru/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcWWVtVHVydVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Alpag/Desktop/Koop_Project/KooperatifYonetim.Web/Views/_ViewImports.cshtml]

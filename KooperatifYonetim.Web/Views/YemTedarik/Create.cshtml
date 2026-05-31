@@ -1,0 +1,58 @@
+@model KooperatifYonetim.Web.Models.YemTedarikFormViewModel
+@{
+    ViewData["Title"] = "Yem Tedarik Başvurusu";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="bi bi-clipboard-plus me-2"></i>Yem Tedarik Başvurusu</h5>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="AhirId" class="form-label"></label>
+                        <select asp-for="AhirId" asp-items="Model.AhirListesi" class="form-select">
+                            <option value="">-- Ahır Seçin --</option>
+                        </select>
+                        <span asp-validation-for="AhirId" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="YemTuruId" class="form-label"></label>
+                        <select asp-for="YemTuruId" asp-items="Model.YemTuruListesi" class="form-select">
+                            <option value="">-- Yem Türü Seçin --</option>
+                        </select>
+                        <span asp-validation-for="YemTuruId" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="TalepMiktar" class="form-label"></label>
+                        <input asp-for="TalepMiktar" class="form-control" type="number" step="0.1" min="0.1" />
+                        <span asp-validation-for="TalepMiktar" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Aciklama" class="form-label"></label>
+                        <textarea asp-for="Aciklama" class="form-control" rows="3"
+                                  placeholder="Ek bilgi veya not (isteğe bağlı)"></textarea>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-send me-1"></i>Başvuruyu Gönder
+                        </button>
+                        <a asp-action="Index" class="btn btn-outline-secondary">İptal</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

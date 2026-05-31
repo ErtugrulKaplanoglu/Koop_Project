@@ -1,0 +1,64 @@
+@model KooperatifYonetim.Web.Models.BesiHareketiFormViewModel
+@{
+    ViewData["Title"] = "Stok Yükle";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0"><i class="bi bi-plus-circle me-2"></i>Stok Yükle</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-4 p-3 bg-light rounded">
+                    <div class="row g-2 text-center">
+                        <div class="col-4">
+                            <div class="text-muted small">Ahır</div>
+                            <div class="fw-semibold">@Model.AhirAd</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="text-muted small">Yem</div>
+                            <div class="fw-semibold">@Model.YemTuruAd</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="text-muted small">Mevcut</div>
+                            <div class="fw-semibold @(Model.MevcutMiktar <= Model.EsikMiktar ? "text-danger" : "")">
+                                @Model.MevcutMiktar.ToString("N1") @Model.Birim
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <form asp-action="StokEkle" method="post">
+                    <input type="hidden" asp-for="StokId" />
+                    <input type="hidden" asp-for="Birim" />
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger d-none"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Miktar" class="form-label">
+                            Eklenecek Miktar (@Model.Birim)
+                        </label>
+                        <input asp-for="Miktar" class="form-control" type="number" step="0.1" min="0.1" />
+                        <span asp-validation-for="Miktar" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Notlar" class="form-label">Notlar</label>
+                        <textarea asp-for="Notlar" class="form-control" rows="2"></textarea>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-check-circle me-1"></i>Stok Yükle
+                        </button>
+                        <a asp-action="Index" class="btn btn-outline-secondary">İptal</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

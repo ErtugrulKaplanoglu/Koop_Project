@@ -1,0 +1,68 @@
+@model KooperatifYonetim.Web.Models.UrunFiyatFormViewModel
+@{
+    ViewData["Title"] = "Yeni Fiyat";
+}
+
+<div class="d-flex align-items-center mb-4">
+    <a asp-action="Index" class="btn btn-sm btn-outline-secondary me-3">
+        <i class="bi bi-arrow-left"></i> Geri
+    </a>
+    <h4 class="fw-bold mb-0">Yeni Fiyat Ekle</h4>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-5">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <form asp-action="Create" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-3 form-check">
+                        <input asp-for="SutMu" class="form-check-input" type="checkbox" id="sutCheck" />
+                        <label asp-for="SutMu" class="form-check-label fw-semibold">Süt Fiyatı mı?</label>
+                    </div>
+
+                    <div class="mb-3" id="ekinTuruDiv">
+                        <label asp-for="EkinTuruId" class="form-label fw-semibold">Ekin Türü</label>
+                        <select asp-for="EkinTuruId" asp-items="Model.EkinTuruListesi" class="form-select">
+                            <option value="">— Ekin Türü Seçin —</option>
+                        </select>
+                        <span asp-validation-for="EkinTuruId" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="BirimFiyat" class="form-label fw-semibold">Birim Fiyat (₺/kg veya ₺/litre)</label>
+                        <input asp-for="BirimFiyat" type="number" step="0.01" class="form-control" />
+                        <span asp-validation-for="BirimFiyat" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="BaslangicTarihi" class="form-label fw-semibold">Başlangıç Tarihi</label>
+                        <input asp-for="BaslangicTarihi" type="date" class="form-control" />
+                        <span asp-validation-for="BaslangicTarihi" class="text-danger small"></span>
+                        <div class="form-text">Aynı ürün için geçerli fiyat varsa otomatik olarak kapatılır.</div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <a asp-action="Index" class="btn btn-outline-secondary flex-fill">İptal</a>
+                        <button type="submit" class="btn btn-primary flex-fill">
+                            <i class="bi bi-save me-1"></i> Kaydet
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const sutCheck = document.getElementById('sutCheck');
+        const ekinDiv = document.getElementById('ekinTuruDiv');
+        function toggleEkin() {
+            ekinDiv.style.display = sutCheck.checked ? 'none' : 'block';
+        }
+        sutCheck.addEventListener('change', toggleEkin);
+        toggleEkin();
+    </script>
+}

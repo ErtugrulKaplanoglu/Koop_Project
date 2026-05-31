@@ -1,0 +1,66 @@
+@model IEnumerable<KooperatifYonetim.Core.Entities.UreticiOdeme>
+@{
+    ViewData["Title"] = "Ödeme Geçmişim";
+}
+
+<div class="d-flex align-items-center mb-4">
+    <h4 class="fw-bold mb-0">Ödeme Geçmişim</h4>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-0">
+        @if (!Model.Any())
+        {
+            <div class="text-center py-5 text-muted">
+                <i class="bi bi-cash-stack fs-1 d-block mb-2"></i>
+                Henüz ödeme kaydınız bulunmuyor.
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Dönem</th>
+                            <th>Durum</th>
+                            <th class="text-end">Ekin (kg)</th>
+                            <th class="text-end">Süt (litre)</th>
+                            <th class="text-end">Toplam Tutar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var uo in Model)
+                        {
+                            <tr>
+                                <td class="fw-semibold">@uo.OdemeDonemi.Yil / @uo.OdemeDonemi.Ay.ToString("D2")</td>
+                                <td>
+                                    @if (uo.OdemeDonemi.Durum == KooperatifYonetim.Core.Enums.OdemeDonemiDurum.Kesinlesti)
+                                    {
+                                        <span class="badge bg-success">Kesinleşti</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning text-dark">Taslak</span>
+                                    }
+                                </td>
+                                <td class="text-end">@uo.ToplamEkinKg.ToString("N1")</td>
+                                <td class="text-end">@uo.ToplamSutLitre.ToString("N1")</td>
+                                <td class="text-end fw-semibold text-success">@uo.ToplamTutar.ToString("N2") ₺</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr class="table-light fw-bold">
+                            <td colspan="4">Kesinleşmiş Toplam</td>
+                            <td class="text-end text-success">
+                                @Model.Where(u => u.OdemeDonemi.Durum == KooperatifYonetim.Core.Enums.OdemeDonemiDurum.Kesinlesti)
+                                      .Sum(u => u.ToplamTutar).ToString("N2") ₺
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        }
+    </div>
+</div>

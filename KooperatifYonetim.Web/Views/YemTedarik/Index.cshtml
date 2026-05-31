@@ -1,0 +1,98 @@
+@model IEnumerable<KooperatifYonetim.Core.Entities.YemTedarikBasvuru>
+@{
+    ViewData["Title"] = "Yem Tedarik Başvuruları";
+    var isAdmin = User.IsInRole("Yonetici");
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold mb-0">Yem Tedarik Başvuruları</h4>
+        <p class="text-muted small mb-0">@Model.Count() başvuru</p>
+    </div>
+    @if (!isAdmin)
+    {
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-1"></i>Yeni Başvuru
+        </a>
+    }
+</div>
+
+@if (TempData["Success"] is string msg)
+{
+    <div class="alert alert-success alert-dismissible fade show">
+        @msg <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-0">
+        @if (!Model.Any())
+        {
+            <div class="text-center py-5 text-muted">
+                <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                <span>Başvuru bulunmuyor.</span>
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            @if (isAdmin) { <th>Üretici</th> }
+                            <th>Ahır</th>
+                            <th>Yem Türü</th>
+                            <th>Talep Miktarı</th>
+                            <th>Başvuru Tarihi</th>
+                            <th>Durum</th>
+                            @if (isAdmin) { <th class="text-end">İşlem</th> }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var b in Model)
+                        {
+                            var birim = b.YemTuru?.Birim == KooperatifYonetim.Core.Enums.YemBirim.Balya ? "balya" : "çuval";
+                            var durumClass = b.Durum switch
+                            {
+                                KooperatifYonetim.Core.Enums.BasvuruDurum.Beklemede => "bg-warning-subtle text-warning border-warning-subtle",
+                                KooperatifYonetim.Core.Enums.BasvuruDurum.Inceleniyor => "bg-info-subtle text-info border-info-subtle",
+                                KooperatifYonetim.Core.Enums.BasvuruDurum.Tamamlandi => "bg-success-subtle text-success border-success-subtle",
+                                _ => "bg-secondary-subtle text-secondary"
+                            };
+                            var durumStr = b.Durum switch
+                            {
+                                KooperatifYonetim.Core.Enums.BasvuruDurum.Beklemede => "Beklemede",
+                                KooperatifYonetim.Core.Enums.BasvuruDurum.Inceleniyor => "İnceleniyor",
+                                KooperatifYonetim.Core.Enums.BasvuruDurum.Tamamlandi => "Tamamlandı",
+                                _ => b.Durum.ToString()
+                            };
+                            <tr>
+                                @if (isAdmin) { <td>@b.Uretici?.UserName</td> }
+                                <td>@b.Ahir?.Ad</td>
+                                <td>@b.YemTuru?.Ad</td>
+                                <td>@b.TalepMiktar.ToString("N1") @birim</td>
+                                <td class="text-muted small">@b.BasvuruTarihi.ToString("dd.MM.yyyy")</td>
+                                <td>
+                                    <span class="badge @durumClass border">@durumStr</span>
+                                    @if (!string.IsNullOrEmpty(b.YoneticiNotu))
+                                    {
+                                        <small class="d-block text-muted mt-1">@b.YoneticiNotu</small>
+                                    }
+                                </td>
+                                @if (isAdmin)
+                                {
+                                    <td class="text-end">
+                                        <a asp-action="DurumGuncelle" asp-route-id="@b.BasvuruId"
+                                           class="btn btn-sm btn-outline-primary">
+                                            <i class="bi bi-pencil me-1"></i>Güncelle
+                                        </a>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>

@@ -15,3 +15,4 @@ C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Business\obj\Debug\net9.0\
 C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Business\obj\Debug\net9.0\refint\KooperatifYonetim.Business.dll
 C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Business\obj\Debug\net9.0\KooperatifYonetim.Business.pdb
 C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Business\obj\Debug\net9.0\ref\KooperatifYonetim.Business.dll
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Business\obj\Debug\net9.0\KooperatifYonetim.Business.sourcelink.json

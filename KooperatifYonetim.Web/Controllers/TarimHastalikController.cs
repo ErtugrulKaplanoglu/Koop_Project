@@ -82,7 +82,7 @@ namespace KooperatifYonetim.Web.Controllers
             var model = new DurumGuncelleViewModel
             {
                 BildirimId = id,
-                EkinTuru = bildirim.Ekin?.EkinTuru ?? string.Empty,
+                EkinTuru = bildirim.Ekin?.EkinTuruNavigation?.Ad ?? string.Empty,
                 AraziAdi = bildirim.Ekin?.Arazi?.Ad ?? string.Empty,
                 Aciklama = bildirim.Aciklama,
                 MevcutDurum = bildirim.Durum,
@@ -108,7 +108,7 @@ namespace KooperatifYonetim.Web.Controllers
         {
             var userId = _userManager.GetUserId(User)!;
             var ekinler = await _ekinService.GetListeAsync(userId, User.IsInRole("Yonetici"));
-            return ekinler.Select(e => new SelectListItem($"{e.EkinTuru} — {e.Arazi?.Ad}", e.EkinId.ToString()));
+            return ekinler.Select(e => new SelectListItem($"{e.EkinTuruNavigation?.Ad ?? "?"} — {e.Arazi?.Ad}", e.EkinId.ToString()));
         }
 
         private async Task<IEnumerable<SelectListItem>> GetMuhendisListesiAsync()

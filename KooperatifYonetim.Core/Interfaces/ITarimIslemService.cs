@@ -11,5 +11,6 @@ namespace KooperatifYonetim.Core.Interfaces
         Task UpdateAsync(TarimIslem islem);
         Task DeleteAsync(int id);
         Task TamamlaAsync(int id, DateTime gerceklesme, decimal? miktar);
+        Task<bool> ToplamaMümkünMüAsync(int ekinId);
     }
 }

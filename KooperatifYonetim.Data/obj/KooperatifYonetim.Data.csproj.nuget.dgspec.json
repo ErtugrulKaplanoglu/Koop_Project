@@ -1,7 +1,7 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Alpag\\Desktop\\Koop_Project\\KooperatifYonetim.Data\\KooperatifYonetim.Data.csproj": {}
+    "C:\\Users\\Alpag\\desktop\\Koop_Project\\KooperatifYonetim.Data\\KooperatifYonetim.Data.csproj": {}
   },
   "projects": {
     "C:\\Users\\Alpag\\desktop\\Koop_Project\\KooperatifYonetim.Core\\KooperatifYonetim.Core.csproj": {
@@ -75,14 +75,14 @@
         }
       }
     },
-    "C:\\Users\\Alpag\\Desktop\\Koop_Project\\KooperatifYonetim.Data\\KooperatifYonetim.Data.csproj": {
+    "C:\\Users\\Alpag\\desktop\\Koop_Project\\KooperatifYonetim.Data\\KooperatifYonetim.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Alpag\\Desktop\\Koop_Project\\KooperatifYonetim.Data\\KooperatifYonetim.Data.csproj",
+        "projectUniqueName": "C:\\Users\\Alpag\\desktop\\Koop_Project\\KooperatifYonetim.Data\\KooperatifYonetim.Data.csproj",
         "projectName": "KooperatifYonetim.Data",
-        "projectPath": "C:\\Users\\Alpag\\Desktop\\Koop_Project\\KooperatifYonetim.Data\\KooperatifYonetim.Data.csproj",
+        "projectPath": "C:\\Users\\Alpag\\desktop\\Koop_Project\\KooperatifYonetim.Data\\KooperatifYonetim.Data.csproj",
         "packagesPath": "C:\\Users\\Alpag\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Alpag\\Desktop\\Koop_Project\\KooperatifYonetim.Data\\obj\\",
+        "outputPath": "C:\\Users\\Alpag\\desktop\\Koop_Project\\KooperatifYonetim.Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

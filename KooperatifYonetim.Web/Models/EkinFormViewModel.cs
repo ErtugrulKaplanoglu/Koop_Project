@@ -14,7 +14,7 @@ namespace KooperatifYonetim.Web.Models
 
         [Required(ErrorMessage = "Ekin türü zorunludur.")]
         [Display(Name = "Ekin Türü")]
-        public string EkinTuru { get; set; } = string.Empty;
+        public int EkinTuruId { get; set; }
 
         [Required(ErrorMessage = "Ekim tarihi zorunludur.")]
         [DataType(DataType.Date)]
@@ -29,5 +29,6 @@ namespace KooperatifYonetim.Web.Models
         public EkinDurum Durum { get; set; } = EkinDurum.Aktif;
 
         public IEnumerable<SelectListItem> AraziListesi { get; set; } = Enumerable.Empty<SelectListItem>();
+        public IEnumerable<SelectListItem> EkinTuruListesi { get; set; } = Enumerable.Empty<SelectListItem>();
     }
 }

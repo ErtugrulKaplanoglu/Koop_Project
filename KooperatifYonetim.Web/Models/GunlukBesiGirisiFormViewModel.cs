@@ -9,17 +9,18 @@ namespace KooperatifYonetim.Web.Models
         [Display(Name = "Ahır")]
         public int AhirId { get; set; }
 
-        [Required(ErrorMessage = "Besi türü zorunludur.")]
-        [Display(Name = "Besi Türü")]
-        public string BesiTuru { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Yem türü zorunludur.")]
+        [Display(Name = "Yem Türü")]
+        public int YemTuruId { get; set; }
 
         [Range(0.01, 99999)]
-        [Display(Name = "Yedirilen Miktar (kg)")]
+        [Display(Name = "Yedirilen Miktar")]
         public decimal YedirildenMiktar { get; set; }
 
         [Display(Name = "Tarih")]
         public DateTime Tarih { get; set; } = DateTime.Today;
 
         public IEnumerable<SelectListItem> AhirListesi { get; set; } = [];
+        public IEnumerable<SelectListItem> YemTuruListesi { get; set; } = [];
     }
 }

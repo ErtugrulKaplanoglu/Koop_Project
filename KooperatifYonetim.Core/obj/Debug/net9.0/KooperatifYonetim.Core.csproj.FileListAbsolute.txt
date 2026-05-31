@@ -10,3 +10,4 @@ C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Core\obj\Debug\net9.0\Koop
 C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Core\obj\Debug\net9.0\refint\KooperatifYonetim.Core.dll
 C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Core\obj\Debug\net9.0\KooperatifYonetim.Core.pdb
 C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Core\obj\Debug\net9.0\ref\KooperatifYonetim.Core.dll
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Core\obj\Debug\net9.0\KooperatifYonetim.Core.sourcelink.json

@@ -1,5 +1,7 @@
 using KooperatifYonetim.Core.Entities;
+using KooperatifYonetim.Core.Enums;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace KooperatifYonetim.Data.Seeds
 {
@@ -20,6 +22,49 @@ namespace KooperatifYonetim.Data.Seeds
                     await roleManager.CreateAsync(new AppRole { Name = roleName });
                 }
             }
+        }
+
+        public static async Task SeedEkinTurleriAsync(AppDbContext db)
+        {
+            if (await db.EkinTurleri.AnyAsync()) return;
+
+            var ekinTurleri = new[]
+            {
+                new EkinTuru { Ad = "Domates",        ToplamaTipi = ToplamaTipi.Periyodik, AktifMi = true },
+                new EkinTuru { Ad = "Biber",          ToplamaTipi = ToplamaTipi.Periyodik, AktifMi = true },
+                new EkinTuru { Ad = "Salatalık",      ToplamaTipi = ToplamaTipi.Periyodik, AktifMi = true },
+                new EkinTuru { Ad = "Mısır",          ToplamaTipi = ToplamaTipi.Periyodik, AktifMi = true },
+                new EkinTuru { Ad = "Fasulye",        ToplamaTipi = ToplamaTipi.Periyodik, AktifMi = true },
+                new EkinTuru { Ad = "Çilek",          ToplamaTipi = ToplamaTipi.Periyodik, AktifMi = true },
+                new EkinTuru { Ad = "Kabak",          ToplamaTipi = ToplamaTipi.Periyodik, AktifMi = true },
+                new EkinTuru { Ad = "Soğan",          ToplamaTipi = ToplamaTipi.TekSefer,  AktifMi = true },
+                new EkinTuru { Ad = "Patates",        ToplamaTipi = ToplamaTipi.TekSefer,  AktifMi = true },
+                new EkinTuru { Ad = "Şeker Pancarı",  ToplamaTipi = ToplamaTipi.TekSefer,  AktifMi = true },
+                new EkinTuru { Ad = "Havuç",          ToplamaTipi = ToplamaTipi.TekSefer,  AktifMi = true },
+                new EkinTuru { Ad = "Sarımsak",       ToplamaTipi = ToplamaTipi.TekSefer,  AktifMi = true },
+                new EkinTuru { Ad = "Buğday",         ToplamaTipi = ToplamaTipi.TekSefer,  AktifMi = true },
+                new EkinTuru { Ad = "Arpa",           ToplamaTipi = ToplamaTipi.TekSefer,  AktifMi = true },
+                new EkinTuru { Ad = "Ayçiçeği",       ToplamaTipi = ToplamaTipi.TekSefer,  AktifMi = true },
+            };
+            db.EkinTurleri.AddRange(ekinTurleri);
+            await db.SaveChangesAsync();
+        }
+
+        public static async Task SeedYemTurleriAsync(AppDbContext db)
+        {
+            if (await db.YemTurleri.AnyAsync()) return;
+
+            var yemTurleri = new[]
+            {
+                new YemTuru { Ad = "Ot",           Birim = YemBirim.Balya, AktifMi = true },
+                new YemTuru { Ad = "Saman",        Birim = YemBirim.Balya, AktifMi = true },
+                new YemTuru { Ad = "Besi Yemi",    Birim = YemBirim.Cuval, AktifMi = true },
+                new YemTuru { Ad = "Arpa Kırması", Birim = YemBirim.Cuval, AktifMi = true },
+                new YemTuru { Ad = "Kepek",        Birim = YemBirim.Cuval, AktifMi = true },
+                new YemTuru { Ad = "Mısır Kırması",Birim = YemBirim.Cuval, AktifMi = true },
+            };
+            db.YemTurleri.AddRange(yemTurleri);
+            await db.SaveChangesAsync();
         }
 
         public static async Task SeedUsersAsync(UserManager<AppUser> userManager)

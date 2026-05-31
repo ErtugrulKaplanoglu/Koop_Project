@@ -240,3 +240,4 @@ C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Web\obj\Debug\net9.0\refin
 C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Web\obj\Debug\net9.0\KooperatifYonetim.Web.pdb
 C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Web\obj\Debug\net9.0\KooperatifYonetim.Web.genruntimeconfig.cache
 C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Web\obj\Debug\net9.0\ref\KooperatifYonetim.Web.dll
+C:\Users\Alpag\Desktop\Koop_Project\KooperatifYonetim.Web\obj\Debug\net9.0\KooperatifYonetim.Web.sourcelink.json

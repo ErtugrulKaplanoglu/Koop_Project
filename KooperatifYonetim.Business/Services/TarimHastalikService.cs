@@ -39,6 +39,23 @@ namespace KooperatifYonetim.Business.Services
         {
             _db.TarimHastalikBildirimler.Add(bildirim);
             await _db.SaveChangesAsync();
+
+            if (!string.IsNullOrEmpty(bildirim.MuhendisId))
+            {
+                var ekin = await _db.Ekinler
+                    .Include(e => e.EkinTuruNavigation)
+                    .FirstOrDefaultAsync(e => e.EkinId == bildirim.EkinId);
+                _db.Bildirimler.Add(new Core.Entities.Bildirim
+                {
+                    AliciId = bildirim.MuhendisId,
+                    Baslik = "Yeni Tarım Hastalık Bildirimi",
+                    Mesaj = $"Bir üretici {ekin?.EkinTuruNavigation?.Ad ?? "ekin"} için hastalık bildirimi oluşturdu.",
+                    BildirimTipi = Core.Enums.BildirimTipi.TarimHastalik,
+                    IlgiliKayitId = bildirim.BildirimId
+                });
+                await _db.SaveChangesAsync();
+            }
+
             return bildirim.BildirimId;
         }
 

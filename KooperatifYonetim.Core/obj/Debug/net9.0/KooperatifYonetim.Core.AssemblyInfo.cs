@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("KooperatifYonetim.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+276c6c18caec33cc1fcf7a766a53b7b1d1cad81c")]
 [assembly: System.Reflection.AssemblyProductAttribute("KooperatifYonetim.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("KooperatifYonetim.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

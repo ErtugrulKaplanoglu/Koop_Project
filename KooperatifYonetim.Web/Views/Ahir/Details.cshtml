@@ -47,7 +47,7 @@
                             @foreach (var s in Model.BesiStoklar)
                             {
                                 <tr class="@(s.MevcutMiktar < s.EsikMiktar ? "table-danger" : "")">
-                                    <td>@s.BesiTuru</td>
+                                    <td>@s.YemTuru?.Ad</td>
                                     <td>@s.MevcutMiktar.ToString("N1")</td>
                                     <td>@s.EsikMiktar.ToString("N1")</td>
                                     <td class="text-muted small">@s.SonGuncelleme.ToString("dd.MM.yyyy")</td>

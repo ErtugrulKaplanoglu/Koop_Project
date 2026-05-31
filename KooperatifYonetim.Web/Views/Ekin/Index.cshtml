@@ -40,7 +40,7 @@
                         @foreach (var ekin in Model)
                         {
                             <tr>
-                                <td class="fw-semibold">@ekin.EkinTuru</td>
+                                <td class="fw-semibold">@ekin.EkinTuruNavigation?.Ad</td>
                                 <td>
                                     <a asp-controller="Arazi" asp-action="Details" asp-route-id="@ekin.AraziId" class="text-decoration-none">
                                         @ekin.Arazi?.Ad
@@ -70,7 +70,7 @@
                                         <i class="bi bi-pencil"></i>
                                     </a>
                                     <form asp-action="Delete" asp-route-id="@ekin.EkinId" method="post" class="d-inline ms-1"
-                                          onsubmit="return confirm('@ekin.EkinTuru ekinini silmek istediğinizden emin misiniz?')">
+                                          onsubmit="return confirm('@(ekin.EkinTuruNavigation?.Ad ?? "Bu") ekinini silmek istediğinizden emin misiniz?')">
                                         @Html.AntiForgeryToken()
                                         <button type="submit" class="btn btn-sm btn-outline-danger">
                                             <i class="bi bi-trash"></i>

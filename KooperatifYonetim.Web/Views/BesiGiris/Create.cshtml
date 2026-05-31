@@ -26,13 +26,17 @@
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="BesiTuru" class="form-label fw-semibold"></label>
-                        <input asp-for="BesiTuru" class="form-control" placeholder="Örn: Arpa, Silaj, Yem" />
-                        <span asp-validation-for="BesiTuru" class="text-danger small"></span>
+                        <label asp-for="YemTuruId" class="form-label fw-semibold"></label>
+                        <select asp-for="YemTuruId" asp-items="Model.YemTuruListesi" id="yemTuruSelect" class="form-select">
+                            <option value="">— Yem Türü Seçin —</option>
+                        </select>
+                        <span asp-validation-for="YemTuruId" class="text-danger small"></span>
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="YedirildenMiktar" class="form-label fw-semibold"></label>
+                        <label asp-for="YedirildenMiktar" class="form-label fw-semibold">
+                            Yedirilen Miktar (<span id="birimLabel">birim</span>)
+                        </label>
                         <input asp-for="YedirildenMiktar" type="number" step="0.1" class="form-control" />
                         <span asp-validation-for="YedirildenMiktar" class="text-danger small"></span>
                     </div>
@@ -54,3 +58,16 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        const yemBirimMap = @Html.Raw(ViewBag.YemBirimMap ?? "{}");
+        const select = document.getElementById('yemTuruSelect');
+        function updateBirim() {
+            const birim = yemBirimMap[select.value] || 'birim';
+            document.getElementById('birimLabel').textContent = birim;
+        }
+        select.addEventListener('change', updateBirim);
+        updateBirim();
+    </script>
+}

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("KooperatifYonetim.Business")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+276c6c18caec33cc1fcf7a766a53b7b1d1cad81c")]
 [assembly: System.Reflection.AssemblyProductAttribute("KooperatifYonetim.Business")]
 [assembly: System.Reflection.AssemblyTitleAttribute("KooperatifYonetim.Business")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

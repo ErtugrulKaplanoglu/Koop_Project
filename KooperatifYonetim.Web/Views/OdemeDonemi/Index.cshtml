@@ -1,0 +1,71 @@
+@model IEnumerable<KooperatifYonetim.Core.Entities.OdemeDonemi>
+@{
+    ViewData["Title"] = "Ödeme Dönemleri";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="fw-bold mb-0">Ödeme Dönemleri</h4>
+    <a asp-action="Create" class="btn btn-primary">
+        <i class="bi bi-plus-circle me-1"></i> Yeni Dönem
+    </a>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show">@TempData["Success"]<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show">@TempData["Error"]<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+}
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-0">
+        @if (!Model.Any())
+        {
+            <div class="text-center py-5 text-muted">
+                <i class="bi bi-calendar3 fs-1 d-block mb-2"></i>
+                Henüz ödeme dönemi oluşturulmamış.
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Dönem</th>
+                            <th>Durum</th>
+                            <th>Onay Tarihi</th>
+                            <th class="text-end">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var od in Model)
+                        {
+                            <tr>
+                                <td class="fw-semibold">@od.Yil / @od.Ay.ToString("D2")</td>
+                                <td>
+                                    @if (od.Durum == KooperatifYonetim.Core.Enums.OdemeDonemiDurum.Kesinlesti)
+                                    {
+                                        <span class="badge bg-success">Kesinleşti</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning text-dark">Açık</span>
+                                    }
+                                </td>
+                                <td>@(od.OnayTarihi?.ToString("dd.MM.yyyy HH:mm") ?? "—")</td>
+                                <td class="text-end">
+                                    <a asp-action="Detay" asp-route-id="@od.OdemeDonemiId" class="btn btn-sm btn-outline-secondary">
+                                        <i class="bi bi-eye me-1"></i> Detay
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>

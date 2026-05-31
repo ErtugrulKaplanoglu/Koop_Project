@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "FSPFGd244yo=",
+  "dgSpecHash": "NYQPbmZR8VA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Alpag\\desktop\\Koop_Project\\KooperatifYonetim.Web\\KooperatifYonetim.Web.csproj",
+  "projectFilePath": "C:\\Users\\Alpag\\desktop\\Koop_Project\\KooperatifYonetim.web\\KooperatifYonetim.Web.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Alpag\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\Alpag\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

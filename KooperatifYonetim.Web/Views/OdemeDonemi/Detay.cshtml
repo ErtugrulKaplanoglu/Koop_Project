@@ -1,0 +1,143 @@
+@model KooperatifYonetim.Core.Entities.OdemeDonemi
+@using System.Text.Json
+@{
+    ViewData["Title"] = $"{Model.Yil}/{Model.Ay:D2} Dönemi";
+    var kesinlesti = Model.Durum == KooperatifYonetim.Core.Enums.OdemeDonemiDurum.Kesinlesti;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex align-items-center">
+        <a asp-action="Index" class="btn btn-sm btn-outline-secondary me-3">
+            <i class="bi bi-arrow-left"></i> Geri
+        </a>
+        <h4 class="fw-bold mb-0">
+            @Model.Yil / @Model.Ay.ToString("D2") Dönemi
+            @if (kesinlesti)
+            {
+                <span class="badge bg-success ms-2">Kesinleşti</span>
+            }
+            else
+            {
+                <span class="badge bg-warning text-dark ms-2">Açık</span>
+            }
+        </h4>
+    </div>
+    @if (!kesinlesti)
+    {
+        <div class="d-flex gap-2">
+            <form asp-action="Hesapla" asp-route-id="@Model.OdemeDonemiId" method="post">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-outline-primary">
+                    <i class="bi bi-calculator me-1"></i> Hesapla
+                </button>
+            </form>
+            @if (Model.UreticiOdemeler.Any())
+            {
+                <form asp-action="Onayla" asp-route-id="@Model.OdemeDonemiId" method="post"
+                      onsubmit="return confirm('Bu dönemi kesinleştirmek istediğinizden emin misiniz?')">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-success">
+                        <i class="bi bi-check-circle me-1"></i> Dönemi Onayla ve Kesinleştir
+                    </button>
+                </form>
+            }
+        </div>
+    }
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show">@TempData["Success"]<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show">@TempData["Error"]<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+}
+
+@if (!Model.UreticiOdemeler.Any())
+{
+    <div class="alert alert-info">
+        <i class="bi bi-info-circle me-2"></i>
+        Henüz hesaplama yapılmamış. "Hesapla" butonuna tıklayarak bu döneme ait ödemeleri hesaplayın.
+    </div>
+}
+else
+{
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white border-0 pt-3">
+            <h6 class="fw-bold mb-0">Üretici Ödemeleri</h6>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Üretici</th>
+                            <th class="text-end">Ekin (kg)</th>
+                            <th class="text-end">Süt (litre)</th>
+                            <th class="text-end">Toplam Tutar</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var uo in Model.UreticiOdemeler.OrderByDescending(x => x.ToplamTutar))
+                        {
+                            <tr>
+                                <td class="fw-semibold">@uo.Uretici?.Ad @uo.Uretici?.Soyad</td>
+                                <td class="text-end">@uo.ToplamEkinKg.ToString("N1")</td>
+                                <td class="text-end">@uo.ToplamSutLitre.ToString("N1")</td>
+                                <td class="text-end fw-semibold text-success">@uo.ToplamTutar.ToString("N2") ₺</td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                                            data-bs-toggle="collapse" data-bs-target="#detay-@uo.UreticiOdemeId">
+                                        <i class="bi bi-list-ul"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="collapse" id="detay-@uo.UreticiOdemeId">
+                                <td colspan="5" class="bg-light">
+                                    @{
+                                        var detaylar = JsonSerializer.Deserialize<List<JsonElement>>(uo.OdemeDetay);
+                                    }
+                                    @if (detaylar != null && detaylar.Any())
+                                    {
+                                        <table class="table table-sm mb-0">
+                                            <thead>
+                                                <tr class="text-muted small">
+                                                    <th>Ürün</th>
+                                                    <th class="text-end">Miktar</th>
+                                                    <th class="text-end">Birim Fiyat</th>
+                                                    <th class="text-end">Tutar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var d in detaylar)
+                                                {
+                                                    <tr class="small">
+                                                        <td>@d.GetProperty("Ad").GetString()</td>
+                                                        <td class="text-end">@d.GetProperty("Miktar").GetDecimal().ToString("N1")</td>
+                                                        <td class="text-end">@d.GetProperty("BirimFiyat").GetDecimal().ToString("N2") ₺</td>
+                                                        <td class="text-end">@d.GetProperty("Tutar").GetDecimal().ToString("N2") ₺</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr class="table-light fw-bold">
+                            <td>Toplam</td>
+                            <td class="text-end">@Model.UreticiOdemeler.Sum(u => u.ToplamEkinKg).ToString("N1")</td>
+                            <td class="text-end">@Model.UreticiOdemeler.Sum(u => u.ToplamSutLitre).ToString("N1")</td>
+                            <td class="text-end text-success">@Model.UreticiOdemeler.Sum(u => u.ToplamTutar).ToString("N2") ₺</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+}
